@@ -30,7 +30,7 @@ if (NOT (${CMAKE_BUILD_TYPE} MATCHES "Debug"))
 endif ()
 
 find_package(PkgConfig REQUIRED)
-find_package(Qt5 REQUIRED COMPONENTS Core)
+find_package(Qt5 REQUIRED COMPONENTS Core DBus)
 #pkg_search_module(XCB REQUIRED xcb)
 
 file(GLOB_RECURSE INCLUDE_FILES "include/*.h")
@@ -47,8 +47,8 @@ set(PC_REQ_PUBLIC)
 
 configure_file(misc/${BIN_NAME}.pc.in ${BIN_NAME}.pc @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${BIN_NAME}.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
-configure_file(misc/${BIN_NAME}Config.cmake.in ${BIN_NAME}/${BIN_NAME}Config.cmake @ONLY)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${BIN_NAME}/${BIN_NAME}Config.cmake DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${BIN_NAME})
+configure_file(misc/${BIN_NAME}Config.cmake.in ${BIN_NAME}Config.cmake @ONLY)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${BIN_NAME}Config.cmake DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${BIN_NAME})
 
 add_library(${BIN_NAME} SHARED
     ${INCLUDE_FILES}
@@ -62,10 +62,12 @@ target_compile_definitions(${BIN_NAME} PRIVATE VERSION="${CMAKE_PROJECT_VERSION}
 
 target_include_directories(${BIN_NAME} PUBLIC
     Qt5::Core
+    Qt5::DBus
 )
 
 target_link_libraries(${BIN_NAME} PRIVATE
     Qt5::Core
+    Qt5::DBus
 )
 
 install(FILES ${INCLUDE_FILES} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
