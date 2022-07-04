@@ -29,14 +29,14 @@
 #include <QDBusPendingReply>
 #include <QDebug>
 
-const QString DBusService = QStringLiteral("org.freedesktop.DBus");
-const QString DBusPath = QStringLiteral("/org/freedesktop/DBus");
-const QString DBusInterface = QStringLiteral("org.freedesktop.DBus");
-const QString NameOwnerChanged = QStringLiteral("NameOwnerChanged");
+const QString &DBusService = QStringLiteral("org.freedesktop.DBus");
+const QString &DBusPath = QStringLiteral("/org/freedesktop/DBus");
+const QString &DBusInterface = QStringLiteral("org.freedesktop.DBus");
+const QString &NameOwnerChanged = QStringLiteral("NameOwnerChanged");
 
-const QString PropertiesInterface = QStringLiteral("org.freedesktop.DBus.Properties");
-const QString PropertiesChanged = QStringLiteral("PropertiesChanged");
-const static char *PropertyName = "propname";
+const QString &PropertiesInterface = QStringLiteral("org.freedesktop.DBus.Properties");
+const QString &PropertiesChanged = QStringLiteral("PropertiesChanged");
+const char *PropertyName = "propname";
 
 DCCDBusInterfacePrivate::DCCDBusInterfacePrivate(DCCDBusInterface *interface, QObject *parent)
     : QObject(interface)
@@ -78,7 +78,7 @@ QVariant DCCDBusInterfacePrivate::updateProp(const char *propname, const QVarian
         m_propertyMap.insert(propname, result);
         QMetaObject::invokeMethod(m_parent, propname + QString("Changed").toLatin1(), Qt::DirectConnection, QGenericArgument(result.typeName(), result.data()));
     } else
-        qInfo() << "invalid property changed:" << propname << value;
+        qWarning() << "invalid property changed:" << propname << value;
 
     return result;
 }
