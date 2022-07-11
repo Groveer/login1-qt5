@@ -33,6 +33,17 @@ find_package(PkgConfig REQUIRED)
 find_package(Qt5 REQUIRED COMPONENTS Core DBus)
 #pkg_search_module(XCB REQUIRED xcb)
 
+#build dbus interface
+# set_source_files_properties(
+#     misc/org.freedesktop.login1.Manager.xml
+#     PROPERTIES INCLUDE include/login1_manager_types.h
+#     CLASSNAME Login1ManagerProxy
+# )
+#
+# qt5_add_dbus_interfaces(MANAGER_DBUS_INTERFACES
+#     misc/org.freedesktop.login1.Manager.xml
+# )
+
 file(GLOB_RECURSE INCLUDE_FILES "include/*.h")
 file(GLOB_RECURSE SRCS
     "src/*.h"
@@ -52,7 +63,8 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${BIN_NAME}Config.cmake DESTINATION ${
 
 add_library(${BIN_NAME} SHARED
     ${INCLUDE_FILES}
-    ${SRCS})
+    ${SRCS}
+    ${MANAGER_DBUS_INTERFACES})
 
 set_target_properties(${BIN_NAME} PROPERTIES
     VERSION ${CMAKE_PROJECT_VERSION}
@@ -63,6 +75,7 @@ target_compile_definitions(${BIN_NAME} PRIVATE VERSION="${CMAKE_PROJECT_VERSION}
 target_include_directories(${BIN_NAME} PUBLIC
     Qt5::Core
     Qt5::DBus
+    include
 )
 
 target_link_libraries(${BIN_NAME} PRIVATE

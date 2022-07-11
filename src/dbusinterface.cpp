@@ -29,22 +29,22 @@
 #include <QDBusPendingReply>
 #include <QDebug>
 
-const QString &DBusService = QStringLiteral("org.freedesktop.DBus");
-const QString &DBusPath = QStringLiteral("/org/freedesktop/DBus");
-const QString &DBusInterface = QStringLiteral("org.freedesktop.DBus");
+const QString &FreedesktopService = QStringLiteral("org.freedesktop.DBus");
+const QString &FreedesktopPath = QStringLiteral("/org/freedesktop/DBus");
+const QString &FreedesktopInterface = QStringLiteral("org.freedesktop.DBus");
 const QString &NameOwnerChanged = QStringLiteral("NameOwnerChanged");
 
 const QString &PropertiesInterface = QStringLiteral("org.freedesktop.DBus.Properties");
 const QString &PropertiesChanged = QStringLiteral("PropertiesChanged");
 const char *PropertyName = "propname";
 
-DCCDBusInterfacePrivate::DCCDBusInterfacePrivate(DCCDBusInterface *interface, QObject *parent)
+DBusInterfacePrivate::DBusInterfacePrivate(DBusInterface *interface, QObject *parent)
     : QObject(interface)
     , m_parent(parent)
     , m_serviceValid(false)
     , q_ptr(interface)
 {
-    QDBusMessage message = QDBusMessage::createMethodCall(DBusService, DBusPath, DBusInterface, "NameHasOwner");
+    QDBusMessage message = QDBusMessage::createMethodCall(FreedesktopService, FreedesktopPath, FreedesktopInterface, "NameHasOwner");
     message << interface->service();
     interface->connection().callWithCallback(message, this, SLOT(onDBusNameHasOwner(bool)));
 
@@ -53,7 +53,7 @@ DCCDBusInterfacePrivate::DCCDBusInterfacePrivate(DCCDBusInterface *interface, QO
     interface->connection().connect(interface->service(), interface->path(), PropertiesInterface, PropertiesChanged, argumentMatch, QString(), this, SLOT(onPropertiesChanged(QString, QVariantMap, QStringList)));
 }
 
-QVariant DCCDBusInterfacePrivate::demarshall(const QMetaProperty &metaProperty, const QVariant &value)
+QVariant DBusInterfacePrivate::demarshall(const QMetaProperty &metaProperty, const QVariant &value)
 {
     if (value.userType() == metaProperty.userType())
         return value;
@@ -67,7 +67,7 @@ QVariant DCCDBusInterfacePrivate::demarshall(const QMetaProperty &metaProperty, 
     return result;
 }
 
-QVariant DCCDBusInterfacePrivate::updateProp(const char *propname, const QVariant &value)
+QVariant DBusInterfacePrivate::updateProp(const char *propname, const QVariant &value)
 {
     QVariant result;
     const QMetaObject *metaObj = m_parent->metaObject();
@@ -83,9 +83,9 @@ QVariant DCCDBusInterfacePrivate::updateProp(const char *propname, const QVarian
     return result;
 }
 
-void DCCDBusInterfacePrivate::initDBusConnection()
+void DBusInterfacePrivate::initDBusConnection()
 {
-    Q_Q(DCCDBusInterface);
+    Q_Q(DBusInterface);
     QDBusConnection connection = q->connection();
     QStringList signalList;
     QDBusInterface inter(q->service(), q->path(), q->interface(), connection);
@@ -106,7 +106,7 @@ void DCCDBusInterfacePrivate::initDBusConnection()
     }
 }
 
-void DCCDBusInterfacePrivate::onPropertiesChanged(const QString &interfaceName, const QVariantMap &changedProperties, const QStringList &invalidatedProperties)
+void DBusInterfacePrivate::onPropertiesChanged(const QString &interfaceName, const QVariantMap &changedProperties, const QStringList &invalidatedProperties)
 {
     Q_UNUSED(interfaceName)
     Q_UNUSED(invalidatedProperties)
@@ -114,7 +114,7 @@ void DCCDBusInterfacePrivate::onPropertiesChanged(const QString &interfaceName, 
         updateProp((it.key() + m_suffix).toLatin1(), it.value());
 }
 
-void DCCDBusInterfacePrivate::onAsyncPropertyFinished(QDBusPendingCallWatcher *w)
+void DBusInterfacePrivate::onAsyncPropertyFinished(QDBusPendingCallWatcher *w)
 {
     QDBusPendingReply<QVariant> reply = *w;
     if (!reply.isError()) {
@@ -123,61 +123,61 @@ void DCCDBusInterfacePrivate::onAsyncPropertyFinished(QDBusPendingCallWatcher *w
     w->deleteLater();
 }
 
-void DCCDBusInterfacePrivate::setServiceValid(bool valid)
+void DBusInterfacePrivate::setServiceValid(bool valid)
 {
     if (m_serviceValid != valid) {
-        Q_Q(DCCDBusInterface);
+        Q_Q(DBusInterface);
         m_serviceValid = valid;
         Q_EMIT q->serviceValidChanged(m_serviceValid);
     }
 }
 
-void DCCDBusInterfacePrivate::onDBusNameHasOwner(bool valid)
+void DBusInterfacePrivate::onDBusNameHasOwner(bool valid)
 {
-    Q_Q(DCCDBusInterface);
+    Q_Q(DBusInterface);
     setServiceValid(valid);
     if (valid)
         initDBusConnection();
     else
-        q->connection().connect(DBusService, DBusPath, DBusInterface, NameOwnerChanged, this, SLOT(onDBusNameOwnerChanged(QString, QString, QString)));
+        q->connection().connect(FreedesktopService, FreedesktopPath, FreedesktopInterface, NameOwnerChanged, this, SLOT(onDBusNameOwnerChanged(QString, QString, QString)));
 }
 
-void DCCDBusInterfacePrivate::onDBusNameOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOWner)
+void DBusInterfacePrivate::onDBusNameOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOWner)
 {
-    Q_Q(DCCDBusInterface);
+    Q_Q(DBusInterface);
     if (name == q->service() && oldOwner.isEmpty()) {
         initDBusConnection();
-        q->connection().disconnect(DBusService, DBusPath, DBusInterface, NameOwnerChanged, this, SLOT(onDBusNameOwnerChanged(QString, QString, QString)));
+        q->connection().disconnect(FreedesktopService, FreedesktopPath, FreedesktopInterface, NameOwnerChanged, this, SLOT(onDBusNameOwnerChanged(QString, QString, QString)));
         setServiceValid(true);
     } else if (name == q->service() && newOWner.isEmpty())
         setServiceValid(false);
 }
 //////////////////////////////////////////////////////////
-DCCDBusInterface::DCCDBusInterface(const QString &service, const QString &path, const QString &interface, const QDBusConnection &connection, QObject *parent)
+DBusInterface::DBusInterface(const QString &service, const QString &path, const QString &interface, const QDBusConnection &connection, QObject *parent)
     : QDBusAbstractInterface(service, path, interface.toLatin1(), connection, parent)
-    , d_ptr(new DCCDBusInterfacePrivate(this, parent))
+    , d_ptr(new DBusInterfacePrivate(this, parent))
 {
 }
 
-DCCDBusInterface::~DCCDBusInterface()
+DBusInterface::~DBusInterface()
 {
 }
 
-bool DCCDBusInterface::serviceValid() const
+bool DBusInterface::serviceValid() const
 {
-    Q_D(const DCCDBusInterface);
+    Q_D(const DBusInterface);
     return d->m_serviceValid;
 }
 
-QString DCCDBusInterface::suffix() const
+QString DBusInterface::suffix() const
 {
-    Q_D(const DCCDBusInterface);
+    Q_D(const DBusInterface);
     return d->m_suffix;
 }
 
-void DCCDBusInterface::setSuffix(const QString &suffix)
+void DBusInterface::setSuffix(const QString &suffix)
 {
-    Q_D(DCCDBusInterface);
+    Q_D(DBusInterface);
     d->m_suffix = suffix;
 }
 
@@ -187,9 +187,9 @@ inline QString originalPropname(const char *propname, QString suffix)
     return propStr.left(propStr.length() - suffix.length());
 }
 
-QVariant DCCDBusInterface::property(const char *propname)
+QVariant DBusInterface::property(const char *propname)
 {
-    Q_D(DCCDBusInterface);
+    Q_D(DBusInterface);
     if (d->m_propertyMap.contains(propname))
         return d->m_propertyMap.value(propname);
 
@@ -201,16 +201,16 @@ QVariant DCCDBusInterface::property(const char *propname)
 
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(prop, this);
     watcher->setProperty(PropertyName, propname);
-    connect(watcher, &QDBusPendingCallWatcher::finished, d, &DCCDBusInterfacePrivate::onAsyncPropertyFinished);
+    connect(watcher, &QDBusPendingCallWatcher::finished, d, &DBusInterfacePrivate::onAsyncPropertyFinished);
     if (d->m_propertyMap.contains(propname))
         return d->m_propertyMap.value(propname);
 
     return QVariant();
 }
 
-void DCCDBusInterface::setProperty(const char *propname, const QVariant &value)
+void DBusInterface::setProperty(const char *propname, const QVariant &value)
 {
-    Q_D(const DCCDBusInterface);
+    Q_D(const DBusInterface);
     QDBusMessage msg = QDBusMessage::createMethodCall(service(), path(), PropertiesInterface, QStringLiteral("Set"));
     msg << interface() << originalPropname(propname, d->m_suffix) << value;
     connection().asyncCall(msg);

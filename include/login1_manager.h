@@ -2,9 +2,7 @@
 
 #include "namespace.h"
 
-#include <qglobal.h>
 #include <qlist.h>
-#include <qobjectdefs.h>
 #include <qpair.h>
 #include <sys/types.h>
 #include <qobject.h>
@@ -12,8 +10,10 @@
 #include <tuple>
 
 #include "login1_types.h"
-class QDBusInterface;
+
+class DBusInterface;
 class QDBusMessage;
+
 LOGIN1_BEGIN_NAMESPACE
 
 class Login1Manager : public QObject
@@ -33,12 +33,12 @@ public:
     Q_PROPERTY(bool OnExternalPower READ onExternalPower NOTIFY OnExternalPowerChanged);
     Q_PROPERTY(bool PreparingForShutdown READ preparingForShutdown NOTIFY PreparingForShutdownChanged);
     Q_PROPERTY(bool PreparingForSleep READ preparingForSleep NOTIFY PreparingForSleepChanged);
-    Q_PROPERTY(bool RebootToFirmwareSetup READ RebootToFirmwareSetup NOTIFY RebootToFirmwareSetupChanged);
+    Q_PROPERTY(bool RebootToFirmwareSetup READ rebootToFirmwareSetup NOTIFY RebootToFirmwareSetupChanged);
     Q_PROPERTY(bool RemoveIPC READ removeIPC NOTIFY RemoveIPCChanged);
     Q_PROPERTY(QString BlockInhibited READ blockInhibited NOTIFY BlockInhibitedChanged);
     Q_PROPERTY(QString DelayInhibited READ delayInhibited NOTIFY DelayInhibitedChanged);
     Q_PROPERTY(QString HandleHibernateKey READ handleHibernateKey NOTIFY HandleHibernateKeyChanged);
-    Q_PROPERTY(QString HandleLidSwitch READ handleLidSwitch NOTIFY handleLidSwitchChanged);
+    Q_PROPERTY(QString HandleLidSwitch READ handleLidSwitch NOTIFY HandleLidSwitchChanged);
     Q_PROPERTY(QString HandleLidSwitchDocked READ handleLidSwitchDocked NOTIFY HandleLidSwitchDockedChanged);
     Q_PROPERTY(QString HandleLidSwitchExternalPower READ handleLidSwitchExternalPower NOTIFY HandleLidSwitchExternalPowerChanged);
     Q_PROPERTY(QString HandlePowerKey READ handlePowerKey NOTIFY HandlePowerKeyChanged);
@@ -68,9 +68,9 @@ public:
     bool killUserProcesses();
     bool lidClosed();
     bool onExternalPower();
-    bool prepareForShutdown();
-    bool prepareForSleep();
-    bool RebootToFirmwareSetup();
+    bool preparingForShutdown();
+    bool preparingForSleep();
+    bool rebootToFirmwareSetup();
     bool removeIPC();
     QString blockInhibited();
     QString delayInhibited();
@@ -112,6 +112,35 @@ signals:
     void EnableWallMessagesChanged(const bool value);
     void LdleHintChanged(const bool value);
     void KillUserProcessesChanged(const bool value);
+    void LidClosedChanged(const bool value);
+    void OnExternalPowerChanged(const bool value);
+    void PreparingForShutdownChanged(const bool value);
+    void PreparingForSleepChanged(const bool value);
+    void RebootToFirmwareSetupChanged(const bool value);
+    void RemoveIPCChanged(const bool value);
+    void BlockInhibitedChanged(const QString &value);
+    void DelayInhibitedChanged(const QString &value);
+    void HandleHibernateKeyChanged(const QString &value);
+    void HandleLidSwitchChanged(const QString &value);
+    void HandleLidSwitchDockedChanged(const QString &value);
+    void HandleLidSwitchExternalPowerChanged(const QString &value);
+    void HandlePowerKeyChanged(const QString &value);
+    void HandleSuspendKeyChanged(const QString &value);
+    void LdleActionChanged(const QString &value);
+    void WallMessageChanged(const QString &value);
+    void ScheduledShutdownChanged(const QPair<QString, quint64> &value);
+    void NAutoVTsChanged(const uint value);
+    void HoldoffTimeoutUSecChanged(const quint64 value);
+    void LdleActionUSecChanged(const quint64 value);
+    void LdleSinceHintChanged(const quint64 value);
+    void LdleSinceHintMonotonicChanged(const quint64 value);
+    void InhibitDelayMaxUSecChanged(const quint64 value);
+    void InhibitorsMaxChanged(const quint64 value);
+    void NCurrentInhibitorsChanged(const quint64 value);
+    void NCurrentSessionsChanged(const quint64 value);
+    void RuntimeDirectorySizeChanged(const quint64 value);
+    void SessionMaxChanged(const quint64 value);
+    void UserStopDelayUSecChanged(const quint64 value);
 
 public slots:
     void activateSession(const QString &session_id);
@@ -140,7 +169,7 @@ public slots:
             > createSession(uint uid, uint pid, const QString &service, const QString &type,
                     const QString &_class, const QString &desktop, const QString &seat_id,
                     uint vtnr, const QString &tty, const QString &display, const QString &remote,
-                    const QString &remote_user, const QString &remote_host, const QList<Property> &property);
+                    const QString &remote_user, const QString &remote_host, const QList<SessionProperty> &properties);
     void flushDevices(const bool value);
     QString getSeat(const QString &seat_id);
     QString getSession(const QString &session_id);
@@ -175,6 +204,6 @@ public slots:
     void unlockSessions();
 
 private:
-    QDBusInterface *m_inter;
+    DBusInterface *m_inter;
 };
 LOGIN1_END_NAMESPACE

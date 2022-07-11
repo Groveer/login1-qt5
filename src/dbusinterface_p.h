@@ -18,19 +18,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef DCCDBUSINTERFACE_P_H
-#define DCCDBUSINTERFACE_P_H
-
+#pragma once
 #include "dbusinterface.h"
 
 class QDBusPendingCallWatcher;
 
-class DCCDBusInterfacePrivate : public QObject
+class DBusInterfacePrivate : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit DCCDBusInterfacePrivate(DCCDBusInterface *interface, QObject *parent);
+    explicit DBusInterfacePrivate(DBusInterface *interface, QObject *parent);
     QVariant demarshall(const QMetaProperty &metaProperty, const QVariant &value);
     QVariant updateProp(const char *propname, const QVariant &value);
     void initDBusConnection();
@@ -48,8 +46,7 @@ public:
     QVariantMap m_propertyMap;
     bool m_serviceValid;
 
-    DCCDBusInterface *q_ptr;
-    Q_DECLARE_PUBLIC(DCCDBusInterface)
+    DBusInterface *q_ptr;
+    Q_DECLARE_PUBLIC(DBusInterface)
 };
 
-#endif // DCCDBUSINTERFACE_P_H

@@ -18,22 +18,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef DCCDBUSINTERFACE_H
-#define DCCDBUSINTERFACE_H
-
+#pragma once
 #include <QDBusAbstractInterface>
 
+class DBusInterfacePrivate;
 
-class DCCDBusInterfacePrivate;
-
-class DCCDBusInterface : public QDBusAbstractInterface
+class DBusInterface : public QDBusAbstractInterface
 {
     Q_OBJECT
 
 public:
-    explicit DCCDBusInterface(const QString &service, const QString &path, const QString &interface = QString(),
+    explicit DBusInterface(const QString &service, const QString &path, const QString &interface = QString(),
                               const QDBusConnection &connection = QDBusConnection::sessionBus(), QObject *parent = nullptr);
-    virtual ~DCCDBusInterface() override;
+    virtual ~DBusInterface() override;
 
     bool serviceValid() const;
     QString suffix() const;
@@ -46,9 +43,8 @@ Q_SIGNALS:
     void serviceValidChanged(const bool valid) const;
 
 private:
-    QScopedPointer<DCCDBusInterfacePrivate> d_ptr;
-    Q_DECLARE_PRIVATE(DCCDBusInterface)
-    Q_DISABLE_COPY(DCCDBusInterface)
+    QScopedPointer<DBusInterfacePrivate> d_ptr;
+    Q_DECLARE_PRIVATE(DBusInterface)
+    Q_DISABLE_COPY(DBusInterface)
 };
 
-#endif // DCCDBUSINTERFACE_H

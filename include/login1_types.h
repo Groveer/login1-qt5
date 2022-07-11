@@ -3,30 +3,25 @@
 #include "namespace.h"
 #include <qdbusargument.h>
 #include <qdbusextratypes.h>
+#include <qdbusmetatype.h>
+#include <qmetatype.h>
+#include <qglobal.h>
 #include <qlist.h>
 #include <qnamespace.h>
 
 LOGIN1_BEGIN_NAMESPACE
-struct Property
+struct ScheduledShutdownValue
+{
+    QString type;
+    quint64 usec;
+    static void registerMetaType();
+};
+
+struct SessionProperty
 {
     QString name;
     QDBusVariant var;
-    friend QDBusArgument &operator<< (QDBusArgument &arg, const Property &property)
-    {
-        arg.beginStructure();
-        arg << property.name;
-        arg << property.var;
-        arg.endStructure();
-        return arg;
-    }
-    friend const QDBusArgument &operator>> (QDBusArgument &arg, Property &property)
-    {
-        arg.beginStructure();
-        arg >> property.name;
-        arg >> property.var;
-        arg.endStructure();
-        return arg;
-    }
+    static void registerMetaType();
 };
 
 struct Inhibitor
@@ -37,52 +32,14 @@ struct Inhibitor
     QString mode;
     uint    uid;
     uint    pid;
-    friend QDBusArgument &operator<< (QDBusArgument &arg, const Inhibitor &inhibitor)
-    {
-        arg.beginStructure();
-        arg << inhibitor.what;
-        arg << inhibitor.who;
-        arg << inhibitor.why;
-        arg << inhibitor.mode;
-        arg << inhibitor.uid;
-        arg << inhibitor.pid;
-        arg.endStructure();
-        return arg;
-    }
-    friend const QDBusArgument &operator>> (QDBusArgument &arg, Inhibitor &inhibitor)
-    {
-        arg.beginStructure();
-        arg >> inhibitor.what;
-        arg >> inhibitor.who;
-        arg >> inhibitor.why;
-        arg >> inhibitor.mode;
-        arg >> inhibitor.uid;
-        arg >> inhibitor.pid;
-        arg.endStructure();
-        return arg;
-    }
+    static void registerMetaType();
 };
 
 struct Seat
 {
     QString seat_id;
     QDBusObjectPath path;
-    friend QDBusArgument &operator<< (QDBusArgument &arg, const Seat &seat)
-    {
-        arg.beginStructure();
-        arg << seat.seat_id;
-        arg << seat.path;
-        arg.endStructure();
-        return arg;
-    }
-    friend const QDBusArgument &operator>> (QDBusArgument &arg, Seat &seat)
-    {
-        arg.beginStructure();
-        arg >> seat.seat_id;
-        arg >> seat.path;
-        arg.endStructure();
-        return arg;
-    }
+    static void registerMetaType();
 };
 
 struct Session
@@ -92,28 +49,7 @@ struct Session
     QString user_name;
     QString seat_id;
     QDBusObjectPath path;
-    friend QDBusArgument &operator<< (QDBusArgument &arg, const Session &session)
-    {
-        arg.beginStructure();
-        arg << session.session_id;
-        arg << session.user_id;
-        arg << session.user_name;
-        arg << session.seat_id;
-        arg << session.path;
-        arg.endStructure();
-        return arg;
-    }
-    friend const QDBusArgument &operator>> (QDBusArgument &arg, Session &session)
-    {
-        arg.beginStructure();
-        arg >> session.session_id;
-        arg >> session.user_id;
-        arg >> session.user_name;
-        arg >> session.seat_id;
-        arg >> session.path;
-        arg.endStructure();
-        return arg;
-    }
+    static void registerMetaType();
 };
 
 struct User
@@ -121,28 +57,25 @@ struct User
     uint user_id;
     QString user_name;
     QDBusObjectPath path;
-    friend QDBusArgument &operator<< (QDBusArgument &arg, const User &user)
-    {
-        arg.beginStructure();
-        arg << user.user_id;
-        arg << user.user_name;
-        arg << user.path;
-        arg.endStructure();
-        return arg;
-    }
-    friend const QDBusArgument &operator>> (QDBusArgument &arg, User &user)
-    {
-        arg.beginStructure();
-        arg >> user.user_id;
-        arg >> user.user_name;
-        arg >> user.path;
-        arg.endStructure();
-        return arg;
-    }
+    static void registerMetaType();
 };
+QDBusArgument &operator<<(QDBusArgument &arg, const ScheduledShutdownValue &value);
+const QDBusArgument &operator>>(const QDBusArgument &arg, ScheduledShutdownValue &value);
+QDBusArgument &operator<<(QDBusArgument &arg, const SessionProperty &property);
+const QDBusArgument &operator>>(const QDBusArgument &arg, SessionProperty &property);
+QDBusArgument &operator<<(QDBusArgument &arg, const Inhibitor &inhibitor);
+const QDBusArgument &operator>>(const QDBusArgument &arg, Inhibitor &inhibitor);
+QDBusArgument &operator<<(QDBusArgument &arg, const Seat &seat);
+const QDBusArgument &operator>>(const QDBusArgument &arg, Seat &seat);
+QDBusArgument &operator<<(QDBusArgument &arg, const Session &session);
+const QDBusArgument &operator>>(const QDBusArgument &arg, Session &session);
+QDBusArgument &operator<<(QDBusArgument &arg, const User &user);
+const QDBusArgument &operator>>(const QDBusArgument &arg, User &user);
 LOGIN1_END_NAMESPACE
-Q_DECLARE_METATYPE(LOGIN1_NAMESPACE::Property)
+Q_DECLARE_METATYPE(LOGIN1_NAMESPACE::ScheduledShutdownValue)
+Q_DECLARE_METATYPE(LOGIN1_NAMESPACE::SessionProperty)
 Q_DECLARE_METATYPE(LOGIN1_NAMESPACE::Inhibitor)
 Q_DECLARE_METATYPE(LOGIN1_NAMESPACE::Seat)
 Q_DECLARE_METATYPE(LOGIN1_NAMESPACE::Session)
 Q_DECLARE_METATYPE(LOGIN1_NAMESPACE::User)
+
