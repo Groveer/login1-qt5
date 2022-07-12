@@ -152,9 +152,9 @@ QString Login1Manager::wallMessage()
     return qvariant_cast<QString>(m_inter->property("WallMessage"));
 }
 
-QPair<QString, quint64> Login1Manager::scheduledShutdown()
+ScheduledShutdownValue Login1Manager::scheduledShutdown()
 {
-    return qvariant_cast<QPair<QString, quint64>>(m_inter->property("ScheduledShutdown"));
+    return qvariant_cast<ScheduledShutdownValue>(m_inter->property("ScheduledShutdown"));
 }
 
 uint Login1Manager::nAutoVTs()

@@ -45,7 +45,7 @@ public:
     Q_PROPERTY(QString HandleSuspendKey READ handleSuspendKey NOTIFY HandleSuspendKeyChanged);
     Q_PROPERTY(QString LdleAction READ ldleAction NOTIFY LdleActionChanged);
     Q_PROPERTY(QString WallMessage READ wallMessage WRITE setWallMessage NOTIFY WallMessageChanged);
-    Q_PROPERTY(QPair<QString, quint64> ScheduledShutdown READ scheduledShutdown NOTIFY ScheduledShutdownChanged);
+    Q_PROPERTY(ScheduledShutdownValue ScheduledShutdown READ scheduledShutdown NOTIFY ScheduledShutdownChanged);
     Q_PROPERTY(uint NAutoVTs READ nAutoVTs NOTIFY NAutoVTsChanged);
     Q_PROPERTY(quint64 HoldoffTimeoutUSec READ holdoffTimeoutUSec NOTIFY HoldoffTimeoutUSecChanged);
     Q_PROPERTY(quint64 LdleActionUSec READ ldleActionUSec NOTIFY LdleActionUSecChanged);
@@ -82,7 +82,7 @@ public:
     QString handleSuspendKey();
     QString ldleAction();
     QString wallMessage();
-    QPair<QString, quint64> scheduledShutdown();
+    ScheduledShutdownValue scheduledShutdown();
     uint nAutoVTs();
     quint64 holdoffTimeoutUSec();
     quint64 ldleActionUSec();
@@ -128,7 +128,7 @@ signals:
     void HandleSuspendKeyChanged(const QString &value);
     void LdleActionChanged(const QString &value);
     void WallMessageChanged(const QString &value);
-    void ScheduledShutdownChanged(const QPair<QString, quint64> &value);
+    void ScheduledShutdownChanged(const ScheduledShutdownValue &value);
     void NAutoVTsChanged(const uint value);
     void HoldoffTimeoutUSecChanged(const quint64 value);
     void LdleActionUSecChanged(const quint64 value);
