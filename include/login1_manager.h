@@ -2,11 +2,9 @@
 
 #include "namespace.h"
 
-#include <qlist.h>
-#include <qpair.h>
-#include <sys/types.h>
 #include <qobject.h>
 
+#include <qscopedpointer.h>
 #include <tuple>
 
 #include "login1_types.h"
@@ -15,6 +13,8 @@ class DBusInterface;
 class QDBusMessage;
 
 LOGIN1_BEGIN_NAMESPACE
+
+class Login1ManagerPrivate;
 
 class Login1Manager : public QObject
 {
@@ -97,6 +97,7 @@ public:
     quint64 userStopDelayUSec();
 
 signals:
+    void errorMessageChanged(const QString &message);
     void prepareForShutdown(const bool value);
     void prepareForSleep(const bool value);
     void seatNew(const QString &seat_id, const QString &seat_path);
@@ -204,6 +205,7 @@ public slots:
     void unlockSessions();
 
 private:
-    DBusInterface *m_inter;
+    QScopedPointer<Login1ManagerPrivate> d_ptr;
+    Q_DECLARE_PRIVATE(Login1Manager)
 };
 LOGIN1_END_NAMESPACE
