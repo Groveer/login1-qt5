@@ -15,11 +15,7 @@
 
 #include "dbusinterface.h"
 #include "login1_types.h"
-#include "src/login1_manager_p.h"
-
-const QString &Service = QStringLiteral("org.freedesktop.login1");
-const QString &Path = QStringLiteral("/org/freedesktop/login1");
-const QString &Interface = QStringLiteral("org.freedesktop.login1.Manager");
+#include "login1_manager_p.h"
 
 LOGIN1_BEGIN_NAMESPACE
 
@@ -27,6 +23,10 @@ Login1Manager::Login1Manager(QObject *parent)
     : QObject(parent)
     , d_ptr(new Login1ManagerPrivate(this)) 
 {
+    const QString &Service = QStringLiteral("org.freedesktop.login1");
+    const QString &Path = QStringLiteral("/org/freedesktop/login1");
+    const QString &Interface = QStringLiteral("org.freedesktop.login1.Manager");
+
     Q_D(Login1Manager);
     ScheduledShutdownValue::registerMetaType();
     SessionProperty::registerMetaType();

@@ -1,12 +1,11 @@
 #pragma once
 
-#include "namespace.h"
-
 #include <qobject.h>
 
 #include <qscopedpointer.h>
 #include <tuple>
 
+#include "namespace.h"
 #include "login1_types.h"
 
 LOGIN1_BEGIN_NAMESPACE
