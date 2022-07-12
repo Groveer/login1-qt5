@@ -259,6 +259,12 @@ quint64 Login1Manager::userStopDelayUSec()
 
 // public slots
 
+QString Login1Manager::lastError()
+{
+    Q_D(Login1Manager);
+    return d->m_errorMessage;    
+}
+
 void Login1Manager::activateSession(const QString &session_id)
 {
     Q_D(Login1Manager);
@@ -633,7 +639,60 @@ void Login1Manager::killUser(const uint uid, const int signal_number)
 QList<Inhibitor> Login1Manager::listInhibitors()
 {
     Q_D(Login1Manager);
-    QDBusPendingReply<QList<Inhibitor>> replay = d->m_inter->asyncCall(QStringLiteral("ListInhibitors")));
+    QDBusPendingReply<QList<Inhibitor>> replay = d->m_inter->asyncCall(QStringLiteral("ListInhibitors"));
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+        return QList<Inhibitor>();
+    }
+    return replay.value();
+}
+
+QList<Seat> Login1Manager::listSeats()
+{
+    Q_D(Login1Manager);
+    QDBusPendingReply<QList<Seat>> replay = d->m_inter->asyncCall(QStringLiteral("ListSeats"));
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+        return QList<Seat>();
+    }
+    return replay.value();
+}
+
+QList<Session> Login1Manager::listSessions()
+{
+    Q_D(Login1Manager);
+    QDBusPendingReply<QList<Session>> replay = d->m_inter->asyncCall(QStringLiteral("ListSessions"));
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+        return QList<Session>();
+    }
+    return replay.value();
+}
+
+QList<User> Login1Manager::listUsers()
+{
+    Q_D(Login1Manager);
+    QDBusPendingReply<QList<User>> replay = d->m_inter->asyncCall(QStringLiteral("ListUsers"));
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+        return QList<User>();
+    }
+    return replay.value();
+}
+
+void Login1Manager::lockSession(const QString &session_id)
+{
+    Q_D(Login1Manager);
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("LockSession"),
+        {QVariant::fromValue(session_id)});
     replay.waitForFinished();
     if (!replay.isValid()) {
         d->m_errorMessage = replay.error().message();
@@ -641,118 +700,181 @@ QList<Inhibitor> Login1Manager::listInhibitors()
     }
 }
 
-QList<Seat> Login1Manager::listSeats()
-{
-    Q_D(Login1Manager);
-    return QDBusPendingReply<QList<Seat>>(d->m_inter->asyncCall(QStringLiteral("ListSeats")));
-}
-
-QList<Session> Login1Manager::listSessions()
-{
-    Q_D(Login1Manager);
-    return QDBusPendingReply<QList<Session>>(d->m_inter->asyncCall(QStringLiteral("ListSessions")));
-}
-
-QList<User> Login1Manager::listUsers()
-{
-    Q_D(Login1Manager);
-    return QDBusPendingReply<QList<User>>(d->m_inter->asyncCall(QStringLiteral("ListUsers")));
-}
-
-void Login1Manager::lockSession(const QString &session_id)
-{
-    Q_D(Login1Manager);
-    d->m_inter->asyncCallWithArgumentList(QStringLiteral("LockSession"), {QVariant::fromValue(session_id)});
-}
-
 void Login1Manager::lockSessions()
 {
     Q_D(Login1Manager);
-    d->m_inter->asyncCall(QStringLiteral("LockSessions"));
+    QDBusPendingReply<> replay = d->m_inter->asyncCall(QStringLiteral("LockSessions"));
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
 }
 
 void Login1Manager::powerOff(const bool interactive)
 {
     Q_D(Login1Manager);
-    d->m_inter->asyncCallWithArgumentList(QStringLiteral("PowerOff"), {QVariant::fromValue(interactive)});
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("PowerOff"),
+        {QVariant::fromValue(interactive)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
 }
 
 void Login1Manager::reboot(const bool interactive)
 {
     Q_D(Login1Manager);
-    d->m_inter->asyncCallWithArgumentList(QStringLiteral("Reboot"), {QVariant::fromValue(interactive)});
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("Reboot"),
+        {QVariant::fromValue(interactive)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
 }
 
 void Login1Manager::releaseSession(const QString &session_id)
 {
     Q_D(Login1Manager);
-    d->m_inter->asyncCallWithArgumentList(QStringLiteral("ReleaseSession"), {QVariant::fromValue(session_id)});
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("ReleaseSession"),
+        {QVariant::fromValue(session_id)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
 }
 
 void Login1Manager::scheduleShutdown(const QString type, qint64 usec)
 {
     Q_D(Login1Manager);
-    d->m_inter->asyncCallWithArgumentList(QStringLiteral("ScheduleShutdown"), {QVariant::fromValue(type), QVariant::fromValue(usec)});
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("ScheduleShutdown"),
+        {QVariant::fromValue(type), QVariant::fromValue(usec)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
 }
 
 void Login1Manager::setRebootTofirmwareSetup(const bool enable)
 {
     Q_D(Login1Manager);
-    d->m_inter->asyncCallWithArgumentList(QStringLiteral("SetRebootTofirmwareSetup"), {QVariant::fromValue(enable)});
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("SetRebootTofirmwareSetup"),
+        {QVariant::fromValue(enable)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
 }
 
 void Login1Manager::setUserLinger(const uint uid, const bool enable, const bool interactive)
 {
     Q_D(Login1Manager);
-    d->m_inter->asyncCallWithArgumentList(QStringLiteral("SetUserLinger"), {QVariant::fromValue(uid),
-        QVariant::fromValue(enable), QVariant::fromValue(interactive)});
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("SetUserLinger"),
+        {QVariant::fromValue(uid), QVariant::fromValue(enable), QVariant::fromValue(interactive)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
 }
 
 void Login1Manager::setWallMessage(const QString &message, const bool enable)
 {
     Q_D(Login1Manager);
-    d->m_inter->asyncCallWithArgumentList(QStringLiteral("SetWallMessage"), {QVariant::fromValue(message), QVariant::fromValue(enable)});
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("SetWallMessage"),
+        {QVariant::fromValue(message), QVariant::fromValue(enable)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
 }
 
 void Login1Manager::suspend(const bool interactive)
 {
     Q_D(Login1Manager);
-    d->m_inter->asyncCallWithArgumentList(QStringLiteral("Suspend"), {QVariant::fromValue(interactive)});
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("Suspend"),
+        {QVariant::fromValue(interactive)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
 }
 
 void Login1Manager::suspendThenHibernate(const bool interactive)
 {
     Q_D(Login1Manager);
-    d->m_inter->asyncCallWithArgumentList(QStringLiteral("SuspendThenHibernate"), {QVariant::fromValue(interactive)});
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("SuspendThenHibernate"),
+        {QVariant::fromValue(interactive)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
 }
 
 void Login1Manager::terminateSeat(const QString &seat_id)
 {
     Q_D(Login1Manager);
-    d->m_inter->asyncCallWithArgumentList(QStringLiteral("TerminateSeat"), {QVariant::fromValue(seat_id)});
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("TerminateSeat"),
+        {QVariant::fromValue(seat_id)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
 }
 
 void Login1Manager::terminateSession(const QString session_id)
 {
     Q_D(Login1Manager);
-    d->m_inter->asyncCallWithArgumentList(QStringLiteral("TerminateSession"), {QVariant::fromValue(session_id)});
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("TerminateSession"),
+        {QVariant::fromValue(session_id)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
 }
 
 void Login1Manager::terminateUser(const uint uid)
 {
     Q_D(Login1Manager);
-    d->m_inter->asyncCallWithArgumentList(QStringLiteral("TerminateUser"), {QVariant::fromValue(uid)});
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("TerminateUser"),
+        {QVariant::fromValue(uid)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
 }
 
 void Login1Manager::unlockSession(const QString &session_id)
 {
     Q_D(Login1Manager);
-    d->m_inter->asyncCallWithArgumentList(QStringLiteral("UnlockSession"), {QVariant::fromValue(session_id)});
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("UnlockSession"),
+        {QVariant::fromValue(session_id)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
 }
 
 void Login1Manager::unlockSessions()
 {
     Q_D(Login1Manager);
-    d->m_inter->asyncCall(QStringLiteral("UnlockSessions"));
+    QDBusPendingReply<> replay = d->m_inter->asyncCall(QStringLiteral("UnlockSessions"));
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
 }
 LOGIN1_END_NAMESPACE

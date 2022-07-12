@@ -9,9 +9,6 @@
 
 #include "login1_types.h"
 
-class DBusInterface;
-class QDBusMessage;
-
 LOGIN1_BEGIN_NAMESPACE
 
 class Login1ManagerPrivate;
@@ -144,6 +141,7 @@ signals:
     void UserStopDelayUSecChanged(const quint64 value);
 
 public slots:
+    QString lastError();
     void activateSession(const QString &session_id);
     void activateSessionOnSeat(const QString &session_id, const QString &seat_id);
     void attachDevice(const QString &seat_id, const QString &sysfs_path, const bool interactive);
