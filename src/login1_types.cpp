@@ -126,40 +126,112 @@ const QDBusArgument &operator>> (const QDBusArgument &arg, User &user)
     return arg;
 }
 
-void login1::ScheduledShutdownValue::registerMetaType()
+QDBusArgument &operator<< (QDBusArgument &arg, const SeatPath &path)
+{
+    arg.beginStructure();
+    arg << path.seat_id;
+    arg << path.path;
+    arg.endStructure();
+    return arg;
+}
+
+const QDBusArgument &operator>> (const QDBusArgument &arg, SeatPath &path)
+{
+    arg.beginStructure();
+    arg >> path.seat_id;
+    arg >> path.path;
+    arg.endStructure();
+    return arg;
+}
+
+QDBusArgument &operator<< (QDBusArgument &arg, const SessionPath &path)
+{
+    arg.beginStructure();
+    arg << path.session_id;
+    arg << path.path;
+    arg.endStructure();
+    return arg;
+}
+
+const QDBusArgument &operator>> (const QDBusArgument &arg, SessionPath &path)
+{
+    arg.beginStructure();
+    arg >> path.session_id;
+    arg >> path.path;
+    arg.endStructure();
+    return arg;
+}
+
+QDBusArgument &operator<< (QDBusArgument &arg, const UserPath &path)
+{
+    arg.beginStructure();
+    arg << path.user_id;
+    arg << path.path;
+    arg.endStructure();
+    return arg;
+}
+
+const QDBusArgument &operator>> (const QDBusArgument &arg, UserPath &path)
+{
+    arg.beginStructure();
+    arg >> path.user_id;
+    arg >> path.path;
+    arg.endStructure();
+    return arg;
+}
+
+void ScheduledShutdownValue::registerMetaType()
 {
     qRegisterMetaType<ScheduledShutdownValue>("ScheduledShutdownValue");
     qDBusRegisterMetaType<ScheduledShutdownValue>();
 }
 
-void login1::SessionProperty::registerMetaType()
+void SessionProperty::registerMetaType()
 {
     qRegisterMetaType<SessionProperty>("SessionProperty");
     qDBusRegisterMetaType<SessionProperty>();
 }
 
-void login1::Inhibitor::registerMetaType()
+void Inhibitor::registerMetaType()
 {
     qRegisterMetaType<Inhibitor>("Inhibitor");
     qDBusRegisterMetaType<Inhibitor>();
 }
 
-void login1::Seat::registerMetaType()
+void Seat::registerMetaType()
 {
     qRegisterMetaType<Seat>("Seat");
     qDBusRegisterMetaType<Seat>();
 }
 
-void login1::Session::registerMetaType()
+void Session::registerMetaType()
 {
     qRegisterMetaType<Session>("Session");
     qDBusRegisterMetaType<Session>();
 }
 
-void login1::User::registerMetaType()
+void User::registerMetaType()
 {
     qRegisterMetaType<User>("User");
     qDBusRegisterMetaType<User>();
+}
+
+void SeatPath::registerMetaType()
+{
+    qRegisterMetaType<SeatPath>("SeatPath");
+    qDBusRegisterMetaType<SeatPath>();
+}
+
+void SessionPath::registerMetaType()
+{
+    qRegisterMetaType<SessionPath>("SessionPath");
+    qDBusRegisterMetaType<SessionPath>();
+}
+
+void UserPath::registerMetaType()
+{
+    qRegisterMetaType<UserPath>("UserPath");
+    qDBusRegisterMetaType<UserPath>();
 }
 
 LOGIN1_END_NAMESPACE

@@ -59,6 +59,28 @@ struct User
     QDBusObjectPath path;
     static void registerMetaType();
 };
+
+struct SeatPath
+{
+    QString seat_id;
+    QDBusObjectPath path;
+    static void registerMetaType();
+};
+
+struct SessionPath
+{
+    QString session_id;
+    QDBusObjectPath path;
+    static void registerMetaType();
+};
+
+struct UserPath
+{
+    uint user_id;
+    QDBusObjectPath path;
+    static void registerMetaType();
+};
+
 QDBusArgument &operator<<(QDBusArgument &arg, const ScheduledShutdownValue &value);
 const QDBusArgument &operator>>(const QDBusArgument &arg, ScheduledShutdownValue &value);
 QDBusArgument &operator<<(QDBusArgument &arg, const SessionProperty &property);
@@ -71,6 +93,13 @@ QDBusArgument &operator<<(QDBusArgument &arg, const Session &session);
 const QDBusArgument &operator>>(const QDBusArgument &arg, Session &session);
 QDBusArgument &operator<<(QDBusArgument &arg, const User &user);
 const QDBusArgument &operator>>(const QDBusArgument &arg, User &user);
+QDBusArgument &operator<<(QDBusArgument &arg, const SeatPath &path);
+const QDBusArgument &operator>>(const QDBusArgument &arg, SeatPath &path);
+QDBusArgument &operator<<(QDBusArgument &arg, const SessionPath &path);
+const QDBusArgument &operator>>(const QDBusArgument &arg, SessionPath &path);
+QDBusArgument &operator<<(QDBusArgument &arg, const UserPath &path);
+const QDBusArgument &operator>>(const QDBusArgument &arg, UserPath &path);
+
 LOGIN1_END_NAMESPACE
 Q_DECLARE_METATYPE(LOGIN1_NAMESPACE::ScheduledShutdownValue)
 Q_DECLARE_METATYPE(LOGIN1_NAMESPACE::SessionProperty)
@@ -78,4 +107,7 @@ Q_DECLARE_METATYPE(LOGIN1_NAMESPACE::Inhibitor)
 Q_DECLARE_METATYPE(LOGIN1_NAMESPACE::Seat)
 Q_DECLARE_METATYPE(LOGIN1_NAMESPACE::Session)
 Q_DECLARE_METATYPE(LOGIN1_NAMESPACE::User)
+Q_DECLARE_METATYPE(LOGIN1_NAMESPACE::SeatPath)
+Q_DECLARE_METATYPE(LOGIN1_NAMESPACE::SessionPath)
+Q_DECLARE_METATYPE(LOGIN1_NAMESPACE::UserPath)
 
