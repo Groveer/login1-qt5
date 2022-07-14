@@ -17,6 +17,8 @@ Login1Session::Login1Session(const QString &path, QObject *parent)
     const QString &Interface = QStringLiteral("org.freedesktop.login1.Session");
 
     Q_D(Login1Session);
+    SeatPath::registerMetaType();
+    UserPath::registerMetaType();
     d->m_inter = new DBusInterface(Service, path, Interface, QDBusConnection::systemBus(), this);
 }
 
