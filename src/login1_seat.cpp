@@ -17,51 +17,51 @@ Login1Seat::Login1Seat(const QString &path, QObject *parent)
     d->m_inter = new DBusInterface(Service, path, Interface, QDBusConnection::systemBus(), this);
 }
 
-QList<SessionPath> Login1Seat::sessions()
+QList<SessionPath> Login1Seat::sessions() const
 {
-    Q_D(Login1Seat);
+    Q_D(const Login1Seat);
     return qvariant_cast<QList<SessionPath>>(d->m_inter->property("Sessions"));
 }
 
-bool Login1Seat::canGraphical()
+bool Login1Seat::canGraphical() const
 {
-    Q_D(Login1Seat);
+    Q_D(const Login1Seat);
     return qvariant_cast<bool>(d->m_inter->property("CanGraphical"));
 }
 
-bool Login1Seat::canTTY()
+bool Login1Seat::canTTY() const
 {
-    Q_D(Login1Seat);
+    Q_D(const Login1Seat);
     return qvariant_cast<bool>(d->m_inter->property("CanTTY"));
 }
 
-bool Login1Seat::idleHint()
+bool Login1Seat::idleHint() const
 {
-    Q_D(Login1Seat);
+    Q_D(const Login1Seat);
     return qvariant_cast<bool>(d->m_inter->property("IdleHint"));
 }
 
-QString Login1Seat::id()
+QString Login1Seat::id() const
 {
-    Q_D(Login1Seat);
+    Q_D(const Login1Seat);
     return qvariant_cast<QString>(d->m_inter->property("Id"));
 }
 
-SessionPath Login1Seat::activeSession()
+SessionPath Login1Seat::activeSession() const
 {
-    Q_D(Login1Seat);
+    Q_D(const Login1Seat);
     return qvariant_cast<SessionPath>(d->m_inter->property("ActiveSession"));
 }
 
-quint64 Login1Seat::idleSinceHint()
+quint64 Login1Seat::idleSinceHint() const
 {
-    Q_D(Login1Seat);
+    Q_D(const Login1Seat);
     return qvariant_cast<quint64>(d->m_inter->property("IdleSinceHint"));
 }
 
-quint64 Login1Seat::idleSinceHintMonotonic()
+quint64 Login1Seat::idleSinceHintMonotonic() const
 {
-    Q_D(Login1Seat);
+    Q_D(const Login1Seat);
     return qvariant_cast<quint64>(d->m_inter->property("IdleSinceHintMonotonic"));
 }
 

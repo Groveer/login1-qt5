@@ -21,7 +21,7 @@ LOGIN1_BEGIN_NAMESPACE
 
 Login1Manager::Login1Manager(QObject *parent)
     : QObject(parent)
-    , d_ptr(new Login1ManagerPrivate(this)) 
+    , d_ptr(new Login1ManagerPrivate(this))
 {
     const QString &Service = QStringLiteral("org.freedesktop.login1");
     const QString &Path = QStringLiteral("/org/freedesktop/login1");
@@ -41,219 +41,219 @@ Login1Manager::~Login1Manager() {}
 
 // properties
 
-QStringList Login1Manager::killExcludeUsers()
+QStringList Login1Manager::killExcludeUsers() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<QStringList>(d->m_inter->property("killExcludeUsers"));
 }
 
-QStringList Login1Manager::killOnlyUsers()
+QStringList Login1Manager::killOnlyUsers() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<QStringList>(d->m_inter->property("killOnlyUsers"));
 }
 
-bool Login1Manager::docked()
+bool Login1Manager::docked() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<bool>(d->m_inter->property("Docked"));
 }
 
-bool Login1Manager::enableWallMessages()
+bool Login1Manager::enableWallMessages() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<bool>(d->m_inter->property("EnableWallMessages"));
 }
 
 void Login1Manager::setEnableWallMessages(const bool enable)
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     d->m_inter->setProperty("EnableWallMessages", QVariant::fromValue(enable));
 }
 
-bool Login1Manager::ldleHint()
+bool Login1Manager::ldleHint() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<bool>(d->m_inter->property("LdleHint"));
 }
 
-bool Login1Manager::killUserProcesses()
+bool Login1Manager::killUserProcesses() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<bool>(d->m_inter->property("KillUserProcesses"));
 }
 
-bool Login1Manager::lidClosed()
+bool Login1Manager::lidClosed() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<bool>(d->m_inter->property("LidClosed"));
 }
 
-bool Login1Manager::onExternalPower()
+bool Login1Manager::onExternalPower() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<bool>(d->m_inter->property("OnExternalPower"));
 }
 
-bool Login1Manager::preparingForShutdown()
+bool Login1Manager::preparingForShutdown() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<bool>(d->m_inter->property("PreparingForShutdown"));
 }
 
-bool Login1Manager::preparingForSleep()
+bool Login1Manager::preparingForSleep() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<bool>(d->m_inter->property("PreparingForSleep"));
 }
 
-bool Login1Manager::rebootToFirmwareSetup()
+bool Login1Manager::rebootToFirmwareSetup() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<bool>(d->m_inter->property("RebootToFirmwareSetup"));
 }
 
-bool Login1Manager::removeIPC()
+bool Login1Manager::removeIPC() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<bool>(d->m_inter->property("RemoveIPC"));
 }
 
-QString Login1Manager::blockInhibited()
+QString Login1Manager::blockInhibited() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<QString>(d->m_inter->property("BlockInhibited"));
 }
 
-QString Login1Manager::delayInhibited()
+QString Login1Manager::delayInhibited() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<QString>(d->m_inter->property("DelayInhibited"));
 }
 
-QString Login1Manager::handleHibernateKey()
+QString Login1Manager::handleHibernateKey() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<QString>(d->m_inter->property("HandleHibernateKey"));
 }
 
-QString Login1Manager::handleLidSwitch()
+QString Login1Manager::handleLidSwitch() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<QString>(d->m_inter->property("HandleLidSwitch"));
 }
 
-QString Login1Manager::handleLidSwitchDocked()
+QString Login1Manager::handleLidSwitchDocked() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<QString>(d->m_inter->property("HandleLidSwitchDocked"));
 }
 
-QString Login1Manager::handleLidSwitchExternalPower()
+QString Login1Manager::handleLidSwitchExternalPower() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<QString>(d->m_inter->property("HandleLidSwitchExternalPower"));
 }
 
-QString Login1Manager::handlePowerKey()
+QString Login1Manager::handlePowerKey() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<QString>(d->m_inter->property("HandlePowerKey"));
 }
 
-QString Login1Manager::handleSuspendKey()
+QString Login1Manager::handleSuspendKey() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<QString>(d->m_inter->property("HandleSuspendKey"));
 }
 
-QString Login1Manager::ldleAction()
+QString Login1Manager::ldleAction() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<QString>(d->m_inter->property("LdleAction"));
 }
 
-QString Login1Manager::wallMessage()
+QString Login1Manager::wallMessage() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<QString>(d->m_inter->property("WallMessage"));
 }
 
-ScheduledShutdownValue Login1Manager::scheduledShutdown()
+ScheduledShutdownValue Login1Manager::scheduledShutdown() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<ScheduledShutdownValue>(d->m_inter->property("ScheduledShutdown"));
 }
 
-uint Login1Manager::nAutoVTs()
+uint Login1Manager::nAutoVTs() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<uint>(d->m_inter->property("NAutoVTs"));
 }
 
-quint64 Login1Manager::holdoffTimeoutUSec()
+quint64 Login1Manager::holdoffTimeoutUSec() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<quint64>(d->m_inter->property("HoldoffTimeoutUSec"));
 }
 
-quint64 Login1Manager::ldleActionUSec()
+quint64 Login1Manager::ldleActionUSec() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<quint64>(d->m_inter->property("LdleActionUSec"));
 }
 
-quint64 Login1Manager::ldleSinceHint()
+quint64 Login1Manager::ldleSinceHint() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<quint64>(d->m_inter->property("LdleSinceHint"));
 }
 
-quint64 Login1Manager::ldleSinceHintMonotonic()
+quint64 Login1Manager::ldleSinceHintMonotonic() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<quint64>(d->m_inter->property("LdleSinceHintMonotonic"));
 }
 
-quint64 Login1Manager::inhibitDelayMaxUSec()
+quint64 Login1Manager::inhibitDelayMaxUSec() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<quint64>(d->m_inter->property("InhibitDelayMaxUSec"));
 }
 
-quint64 Login1Manager::inhibitorsMax()
+quint64 Login1Manager::inhibitorsMax() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<quint64>(d->m_inter->property("inhibitorsMax"));
 }
 
-quint64 Login1Manager::nCurrentInhibitors()
+quint64 Login1Manager::nCurrentInhibitors() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<quint64>(d->m_inter->property("NCurrentInhibitors"));
 }
 
-quint64 Login1Manager::nCurrentSessions()
+quint64 Login1Manager::nCurrentSessions() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<quint64>(d->m_inter->property("NCurrentSessions"));
 }
 
-quint64 Login1Manager::runtimeDirectorySize()
+quint64 Login1Manager::runtimeDirectorySize() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<quint64>(d->m_inter->property("RuntimeDirectorySize"));
 }
 
-quint64 Login1Manager::sessionMax()
+quint64 Login1Manager::sessionMax() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<quint64>(d->m_inter->property("SessionMax"));
 }
 
-quint64 Login1Manager::userStopDelayUSec()
+quint64 Login1Manager::userStopDelayUSec() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return qvariant_cast<quint64>(d->m_inter->property("UserStopDelayUSec"));
 }
 
@@ -262,7 +262,7 @@ quint64 Login1Manager::userStopDelayUSec()
 QString Login1Manager::lastError()
 {
     Q_D(Login1Manager);
-    return d->m_errorMessage;    
+    return d->m_errorMessage;
 }
 
 void Login1Manager::activateSession(const QString &session_id)
@@ -452,7 +452,7 @@ bool Login1Manager::cancelScheduledShutdown()
     if (!replay.isValid()) {
         d->m_errorMessage = replay.error().message();
         emit errorMessageChanged(d->m_errorMessage);
-        return false; 
+        return false;
     }
     return replay.value();
 }

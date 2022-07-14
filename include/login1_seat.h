@@ -25,14 +25,14 @@ public:
     Q_PROPERTY(quint64 IdleSinceHint READ idleSinceHint NOTIFY IdleSinceHintChanged)
     Q_PROPERTY(quint64 IdleSinceHintMonotonic READ idleSinceHintMonotonic NOTIFY IdleSinceHintMonotonicChanged)
 
-    bool canGraphical();
-    bool canTTY();
-    bool idleHint();
-    QList<SessionPath> sessions();
-    QString id();
-    SessionPath activeSession();
-    quint64 idleSinceHint();
-    quint64 idleSinceHintMonotonic();
+    bool canGraphical() const;
+    bool canTTY() const;
+    bool idleHint() const;
+    QList<SessionPath> sessions() const;
+    QString id() const;
+    SessionPath activeSession() const;
+    quint64 idleSinceHint() const;
+    quint64 idleSinceHintMonotonic() const;
 
 signals:
     void errorMessageChanged(const QString &message);

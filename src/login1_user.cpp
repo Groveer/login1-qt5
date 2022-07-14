@@ -23,93 +23,93 @@ Login1User::Login1User(const QString &path, QObject *parent)
 
 Login1User::~Login1User() {}
 
-QList<SessionPath> Login1User::sessions()
+QList<SessionPath> Login1User::sessions() const
 {
-    Q_D(Login1User);
+    Q_D(const Login1User);
     return qvariant_cast<QList<SessionPath>>(d->m_inter->property("Sessions"));
 }
 
-bool Login1User::idleHint()
+bool Login1User::idleHint() const
 {
-    Q_D(Login1User);
+    Q_D(const Login1User);
     return qvariant_cast<bool>(d->m_inter->property("IdleHint"));
 }
 
-bool Login1User::linger()
+bool Login1User::linger() const
 {
-    Q_D(Login1User);
+    Q_D(const Login1User);
     return qvariant_cast<bool>(d->m_inter->property("Linger"));
 }
 
-QString Login1User::name()
+QString Login1User::name() const
 {
-    Q_D(Login1User);
+    Q_D(const Login1User);
     return qvariant_cast<QString>(d->m_inter->property("Name"));
 }
 
-QString Login1User::runtimePath()
+QString Login1User::runtimePath() const
 {
-    Q_D(Login1User);
+    Q_D(const Login1User);
     return qvariant_cast<QString>(d->m_inter->property("RuntimePath"));
 }
 
-QString Login1User::service()
+QString Login1User::service() const
 {
-    Q_D(Login1User);
+    Q_D(const Login1User);
     return qvariant_cast<QString>(d->m_inter->property("Service"));
 }
 
-QString Login1User::slice()
+QString Login1User::slice() const
 {
-    Q_D(Login1User);
+    Q_D(const Login1User);
     return qvariant_cast<QString>(d->m_inter->property("Slice"));
 }
 
-QString Login1User::state()
+QString Login1User::state() const
 {
-    Q_D(Login1User);
+    Q_D(const Login1User);
     return qvariant_cast<QString>(d->m_inter->property("State"));
 }
 
-SessionPath Login1User::display()
+SessionPath Login1User::display() const
 {
-    Q_D(Login1User);
+    Q_D(const Login1User);
     return qvariant_cast<SessionPath>(d->m_inter->property("Display"));
 }
 
-uint Login1User::GID()
+uint Login1User::GID() const
 {
-    Q_D(Login1User);
+    Q_D(const Login1User);
     return qvariant_cast<uint>(d->m_inter->property("GID"));
 }
 
-uint Login1User::UID()
+uint Login1User::UID() const
 {
-    Q_D(Login1User);
+    Q_D(const Login1User);
     return qvariant_cast<uint>(d->m_inter->property("UID"));
 }
 
-quint64 Login1User::idleSinceHint()
+quint64 Login1User::idleSinceHint() const
 {
-    Q_D(Login1User);
+    Q_D(const Login1User);
     return qvariant_cast<quint64>(d->m_inter->property("IdleSinceHint"));
 }
 
-quint64 Login1User::idleSinceHintMonotonic()
+quint64 Login1User::idleSinceHintMonotonic() const
 {
-    Q_D(Login1User);
+    Q_D(const Login1User);
     return qvariant_cast<quint64>(d->m_inter->property("IdleSinceHintMonotonic"));
 }
 
-quint64 Login1User::timestamp()
+quint64 Login1User::timestamp() const
 {
-    Q_D(Login1User);
+    Q_D(const Login1User);
     return qvariant_cast<quint64>(d->m_inter->property("Timestamp"));
 }
 
-quint64 Login1User::timestampMonotonic()
+quint64 Login1User::timestampMonotonic() const
 {
-    Q_D(Login1User);
+    Q_D(const Login1User);
     return qvariant_cast<quint64>(d->m_inter->property("TimestampMonotonic"));
 }
 

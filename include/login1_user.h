@@ -32,21 +32,21 @@ public:
     Q_PROPERTY(quint64 Timestamp READ timestamp NOTIFY TimestampChanged)
     Q_PROPERTY(quint64 TimestampMonotonic READ timestampMonotonic NOTIFY TimestampMonotonicChanged)
 
-    QList<SessionPath> sessions();
-    bool idleHint();
-    bool linger();
-    QString name();
-    QString runtimePath();
-    QString service();
-    QString slice();
-    QString state();
-    SessionPath display();
-    uint GID();
-    uint UID();
-    quint64 idleSinceHint();
-    quint64 idleSinceHintMonotonic();
-    quint64 timestamp();
-    quint64 timestampMonotonic();
+    QList<SessionPath> sessions() const;
+    bool idleHint() const;
+    bool linger() const;
+    QString name() const;
+    QString runtimePath() const;
+    QString service() const;
+    QString slice() const;
+    QString state() const;
+    SessionPath display() const;
+    uint GID() const;
+    uint UID() const;
+    quint64 idleSinceHint() const;
+    quint64 idleSinceHintMonotonic() const;
+    quint64 timestamp() const;
+    quint64 timestampMonotonic() const;
 
 signals:
     void errorMessageChanged(const QString &message);
