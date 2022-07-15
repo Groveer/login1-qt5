@@ -1,4 +1,4 @@
-#define LOGIN1_NAMESPACE login1
+#define LOGIN1_NAMESPACE Login1
 
 #define LOGIN1_USE_NAMESPACE using namespace LOGIN1_NAMESPACE;
 

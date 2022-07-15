@@ -1,0 +1,19 @@
+/*!
+@~chinese
+@file login1_manager.h
+
+login1_manager.h 中定义了登录管理对象的接口。
+
+@class Login1::Login1Manager login1_manager.h
+@brief Login1Manager 类
+
+Login1Manager 中定义了登录管理对象的接口。
+
+@fn QStringList Login1Manager::killExcludeUsers() const
+@brief 读取 KillExcludeUsers 属性。
+
+该属性将获取采用空格分割的用户列表，在设置了 KillUserProcesses=yes 将会排除该用户会话范围内的进程。如果未设置 KillExcludeUsers=，则默认排除“root”用户。
+
+@return 以空格分割的用户列表.
+
+*/
