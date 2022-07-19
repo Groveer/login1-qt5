@@ -3,6 +3,7 @@
 #include <qobject.h>
 
 #include "login1_types.h"
+#include "src/login1_types_p.h"
 #include "namespace.h"
 
 LOGIN1_BEGIN_NAMESPACE
@@ -104,6 +105,10 @@ signals:
     void IdleSinceHintMonotonicChanged(const quint64 value);
     void TimestampChanged(const quint64 value);
     void TimestampMonotonicChanged(const quint64 value);
+
+    // private signals
+    void SeatChanged(const SeatPath_p &value);
+    void UserChanged(const UserPath_p &value);
 
 public slots:
     void activate();

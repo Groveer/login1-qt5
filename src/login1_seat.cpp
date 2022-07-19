@@ -2,6 +2,9 @@
 
 #include "dbusinterface.h"
 #include "login1_seat_p.h"
+#include "login1_types.h"
+#include "src/login1_types_p.h"
+#include <qlist.h>
 #include <qobject.h>
 #include <qdbuspendingreply.h>
 
@@ -13,14 +16,43 @@ Login1Seat::Login1Seat(const QString &path, QObject *parent)
     const QString &Service = QStringLiteral("org.freedesktop.login1");
     const QString &Interface = QStringLiteral("org.freedesktop.login1.Seat");
 
+    SessionPath_p::registerMetaType();
     Q_D(Login1Seat);
     d->m_inter = new DBusInterface(Service, path, Interface, QDBusConnection::systemBus(), this);
+
+    // init signals;
+    connect(this, qOverload<const QList<SessionPath_p>&>(&Login1Seat::SessionsChanged),
+            this, [this] (const QList<SessionPath_p> paths_p) {
+                QList<SessionPath> paths;
+                for (auto && path_p : paths_p) {
+                    SessionPath path;
+                    path.path = path_p.path.path();
+                    path.session_id = path_p.session_id;
+                    paths.append(path);
+                }
+                emit this->SessionsChanged(paths);
+            });
+    connect(this, qOverload<const SessionPath_p&>(&Login1Seat::ActiveSessionChanged),
+            this, [this] (const SessionPath_p path_p) {
+                SessionPath path;
+                path.path = path_p.path.path();
+                path.session_id = path_p.session_id;
+                emit this->ActiveSessionChanged(path);
+            });
 }
 
 QList<SessionPath> Login1Seat::sessions() const
 {
     Q_D(const Login1Seat);
-    return qvariant_cast<QList<SessionPath>>(d->m_inter->property("Sessions"));
+    const auto &result = qvariant_cast<QList<SessionPath_p>>(d->m_inter->property("Sessions"));
+    QList<SessionPath> sessionPaths;
+    for (auto sessionPath_p : result) {
+        SessionPath sessionPath;
+        sessionPath.path = sessionPath_p.path.path();
+        sessionPath.session_id =sessionPath_p.session_id;
+        sessionPaths.append(sessionPath);
+    }
+    return sessionPaths;
 }
 
 bool Login1Seat::canGraphical() const
@@ -50,7 +82,11 @@ QString Login1Seat::id() const
 SessionPath Login1Seat::activeSession() const
 {
     Q_D(const Login1Seat);
-    return qvariant_cast<SessionPath>(d->m_inter->property("ActiveSession"));
+    const auto & result = qvariant_cast<SessionPath_p>(d->m_inter->property("ActiveSession"));
+    SessionPath path;
+    path.path = result.path.path();
+    path.session_id = result.session_id;
+    return path;
 }
 
 quint64 Login1Seat::idleSinceHint() const

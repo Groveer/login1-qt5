@@ -7,6 +7,7 @@
 
 #include "namespace.h"
 #include "login1_types.h"
+#include "src/login1_types_p.h"
 
 LOGIN1_BEGIN_NAMESPACE
 
@@ -94,14 +95,14 @@ public:
 
 signals:
     void errorMessageChanged(const QString &message);
-    void prepareForShutdown(const bool value);
-    void prepareForSleep(const bool value);
-    void seatNew(const QString &seat_id, const QString &seat_path);
-    void seatRemoved(const QString &seat_id, const QString &seat_path);
-    void sessionNew(const QString &session_id, const QString &session_path);
-    void sessionRemoved(const QString &session_id, const QString &session_path);
-    void userNew(const uint uid, const QString &path);
-    void userRemoved(const uint uid, const QString &path);
+    void PrepareForShutdown(const bool value);
+    void PrepareForSleep(const bool value);
+    void SeatNew(const QString &seat_id, const QString &seat_path);
+    void SeatRemoved(const QString &seat_id, const QString &seat_path);
+    void SessionNew(const QString &session_id, const QString &session_path);
+    void SessionRemoved(const QString &session_id, const QString &session_path);
+    void UserNew(const uint uid, const QString &path);
+    void UserRemoved(const uint uid, const QString &path);
     // properties changed
     void KillExcludeUsersChanged(const QStringList &users);
     void KillOnlyUsersChanged(const QStringList &users);
@@ -138,6 +139,15 @@ signals:
     void RuntimeDirectorySizeChanged(const quint64 value);
     void SessionMaxChanged(const quint64 value);
     void UserStopDelayUSecChanged(const quint64 value);
+    // private signals
+    void ScheduledShutdownChanged(const ScheduledShutdownValue_p &value);
+    void SeatNew(const QString &seat_id, const QDBusObjectPath &seat_path);
+    void SeatRemoved(const QString &seat_id, const QDBusObjectPath &seat_path);
+    void SessionNew(const QString &session_id, const QDBusObjectPath &session_path);
+    void SessionRemoved(const QString &session_id, const QDBusObjectPath &session_path);
+    void UserNew(const uint uid, const QDBusObjectPath &path);
+    void UserRemoved(const uint uid, const QDBusObjectPath &path);
+
 
 public slots:
     QString lastError();

@@ -112,3 +112,23 @@ target_link_libraries(${BIN_NAME} PRIVATE
 
 install(FILES ${INCLUDE_FILES} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${BIN_NAME})
 install(TARGETS ${BIN_NAME} DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+
+file(GLOB_RECURSE TEST_FILES "tests/*.cpp")
+
+add_executable(test
+    ${INCLUDE_FILES}
+    ${SRCS}
+    ${TEST_FILES})
+
+target_include_directories(test PUBLIC
+    Qt5::Core
+    Qt5::DBus
+    include
+)
+
+target_link_libraries(test PRIVATE
+    Qt5::Core
+    Qt5::DBus
+)
+

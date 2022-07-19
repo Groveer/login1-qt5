@@ -4,6 +4,7 @@
 
 #include "namespace.h"
 #include "login1_types.h"
+#include "src/login1_types_p.h"
 
 LOGIN1_BEGIN_NAMESPACE
 

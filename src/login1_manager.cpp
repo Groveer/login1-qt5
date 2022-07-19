@@ -14,8 +14,8 @@
 #include <tuple>
 
 #include "dbusinterface.h"
-#include "login1_types.h"
 #include "login1_manager_p.h"
+#include "login1_types_p.h"
 
 LOGIN1_BEGIN_NAMESPACE
 
@@ -28,13 +28,62 @@ Login1Manager::Login1Manager(QObject *parent)
     const QString &Interface = QStringLiteral("org.freedesktop.login1.Manager");
 
     Q_D(Login1Manager);
-    ScheduledShutdownValue::registerMetaType();
-    SessionProperty::registerMetaType();
-    Inhibitor::registerMetaType();
-    Seat::registerMetaType();
-    Session::registerMetaType();
-    User::registerMetaType();
+    ScheduledShutdownValue_p::registerMetaType();
+    SessionProperty_p::registerMetaType();
+    Inhibitor_p::registerMetaType();
+    Seat_p::registerMetaType();
+    Session_p::registerMetaType();
+    User_p::registerMetaType();
     d->m_inter = new DBusInterface(Service, Path, Interface, QDBusConnection::systemBus(), this);
+
+    // init signals;
+    connect(this, qOverload<const QString&, const QDBusObjectPath&>(&Login1Manager::SeatNew),
+            this, [this] (const QString& seat_id, const QDBusObjectPath &path) {
+                emit this->SeatNew(seat_id, path.path());
+            });
+    connect(this, qOverload<const QString&, const QDBusObjectPath&>(&Login1Manager::SeatRemoved),
+            this, [this] (const QString& seat_id, const QDBusObjectPath &path) {
+                emit this->SeatRemoved(seat_id, path.path());
+            });
+    connect(this, qOverload<const QString&, const QDBusObjectPath&>(&Login1Manager::SessionNew),
+            this, [this] (const QString& session_id, const QDBusObjectPath &path) {
+                emit this->SessionNew(session_id, path.path());
+            });
+    connect(this, qOverload<const QString&, const QDBusObjectPath&>(&Login1Manager::SessionRemoved),
+            this, [this] (const QString& session_id, const QDBusObjectPath &path) {
+                emit this->SessionRemoved(session_id, path.path());
+            });
+    connect(this, qOverload<const uint, const QDBusObjectPath&>(&Login1Manager::UserNew),
+            this, [this] (const uint uid, const QDBusObjectPath &path) {
+                emit this->UserNew(uid, path.path());
+            });
+    connect(this, qOverload<const uint, const QDBusObjectPath&>(&Login1Manager::UserRemoved),
+            this, [this] (const uint uid, const QDBusObjectPath &path) {
+                emit this->UserRemoved(uid, path.path());
+            });
+    connect(this, qOverload<const ScheduledShutdownValue_p&>(&Login1Manager::ScheduledShutdownChanged),
+            this, [this] (const ScheduledShutdownValue_p &value) {
+                ScheduledShutdownValue tempValue;
+                tempValue.type = value.type;
+                tempValue.usec = value.usec;
+                emit this->ScheduledShutdownChanged(tempValue);
+            });
+    QDBusConnection::systemBus().connect(Service, Path, Interface, "PreparingForShutdown",
+                                         this, SLOT(PreparingForShutdown(const bool)));
+    QDBusConnection::systemBus().connect(Service, Path, Interface, "PreparingForSleep",
+                                         this, SLOT(PreparingForSleep(const bool)));
+    QDBusConnection::systemBus().connect(Service, Path, Interface, "SeatNew",
+                                         this, SLOT(SeatNew(const QString&, const QDBusObjectPath&)));
+    QDBusConnection::systemBus().connect(Service, Path, Interface, "SeatRemoved",
+                                         this, SLOT(SeatRemoved(const QString&, const QDBusObjectPath&)));
+    QDBusConnection::systemBus().connect(Service, Path, Interface, "SessionNew",
+                                         this, SLOT(SessionNew(const QString&, const QDBusObjectPath&)));
+    QDBusConnection::systemBus().connect(Service, Path, Interface, "SessionRemoved",
+                                         this, SLOT(SessionRemoved(const QString&, const QDBusObjectPath&)));
+    QDBusConnection::systemBus().connect(Service, Path, Interface, "UserNew",
+                                         this, SLOT(UserNew(const QString&, const QDBusObjectPath&)));
+    QDBusConnection::systemBus().connect(Service, Path, Interface, "UserRemoved",
+                                         this, SLOT(UserRemoved(const QString&, const QDBusObjectPath&)));
 }
 
 Login1Manager::~Login1Manager() {}
@@ -182,7 +231,11 @@ QString Login1Manager::wallMessage() const
 ScheduledShutdownValue Login1Manager::scheduledShutdown() const
 {
     Q_D(const Login1Manager);
-    return qvariant_cast<ScheduledShutdownValue>(d->m_inter->property("ScheduledShutdown"));
+    const auto &result = qvariant_cast<ScheduledShutdownValue_p>(d->m_inter->property("ScheduledShutdown"));
+    ScheduledShutdownValue value;
+    value.type = result.type;
+    value.usec = result.usec;
+    return value;
 }
 
 uint Login1Manager::nAutoVTs() const
@@ -471,18 +524,25 @@ std::tuple<QString,     // session_id
         const QString &remote_user, const QString &remote_host, const QList<SessionProperty> &properties)
 {
     Q_D(Login1Manager);
+    QList<SessionProperty_p> properties_p;
+    for (auto && property : properties) {
+        SessionProperty_p property_p;
+        property_p.name = property.name;
+        property_p.var.setVariant(property.var);
+        properties_p.append(property_p);
+    }
     QVariantList args;
     args << QVariant::fromValue(uid) << QVariant::fromValue(pid) << QVariant::fromValue(service) << QVariant::fromValue(type)
         << QVariant::fromValue(_class) << QVariant::fromValue(desktop) << QVariant::fromValue(seat_id)
         << QVariant::fromValue(vtnr) << QVariant::fromValue(tty) << QVariant::fromValue(display) << QVariant::fromValue(remote)
-        << QVariant::fromValue(remote_user) << QVariant::fromValue(remote_host) << QVariant::fromValue(properties);
+        << QVariant::fromValue(remote_user) << QVariant::fromValue(remote_host) << QVariant::fromValue(properties_p);
     QDBusPendingReply<QString, QDBusObjectPath, QString, QDBusUnixFileDescriptor, uint, QString, uint, bool>
         replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("CreateSession"), args);
     replay.waitForFinished();
     if (!replay.isValid()) {
         d->m_errorMessage = replay.error().message();
         emit errorMessageChanged(d->m_errorMessage);
-        return std::tuple<QString, QString, QString, int, uint, QString, uint, bool>(); 
+        return std::tuple<QString, QString, QString, int, uint, QString, uint, bool>();
     }
     return std::make_tuple(replay.argumentAt<0>(), replay.argumentAt<1>().path(), replay.argumentAt<2>(),
         replay.argumentAt<3>().fileDescriptor(), replay.argumentAt<4>(), replay.argumentAt<5>(), replay.argumentAt<6>(),
@@ -639,53 +699,93 @@ void Login1Manager::killUser(const uint uid, const int signal_number)
 QList<Inhibitor> Login1Manager::listInhibitors()
 {
     Q_D(Login1Manager);
-    QDBusPendingReply<QList<Inhibitor>> replay = d->m_inter->asyncCall(QStringLiteral("ListInhibitors"));
+    QDBusPendingReply<QList<Inhibitor_p>> replay = d->m_inter->asyncCall(QStringLiteral("ListInhibitors"));
     replay.waitForFinished();
+    QList<Inhibitor> inhibitors;
     if (!replay.isValid()) {
         d->m_errorMessage = replay.error().message();
         emit errorMessageChanged(d->m_errorMessage);
-        return QList<Inhibitor>();
+        return inhibitors;
     }
-    return replay.value();
+
+    for (auto &&inhibitor_p : replay.value()) {
+        Inhibitor inhibitor;
+        inhibitor.mode = inhibitor_p.mode;
+        inhibitor.pid = inhibitor_p.pid;
+        inhibitor.uid = inhibitor_p.uid;
+        inhibitor.what = inhibitor_p.what;
+        inhibitor.who = inhibitor_p.who;
+        inhibitor.why = inhibitor_p.why;
+        inhibitors.append(inhibitor);
+    }
+    return inhibitors;
 }
 
 QList<Seat> Login1Manager::listSeats()
 {
     Q_D(Login1Manager);
-    QDBusPendingReply<QList<Seat>> replay = d->m_inter->asyncCall(QStringLiteral("ListSeats"));
+    QDBusPendingReply<QList<Seat_p>> replay = d->m_inter->asyncCall(QStringLiteral("ListSeats"));
     replay.waitForFinished();
+    QList<Seat> seats;
     if (!replay.isValid()) {
         d->m_errorMessage = replay.error().message();
         emit errorMessageChanged(d->m_errorMessage);
-        return QList<Seat>();
+        return seats;
     }
-    return replay.value();
+
+    for (auto &&seat_p : replay.value()) {
+        Seat seat;
+        seat.seat_id = seat_p.seat_id;
+        seat.path = seat_p.path.path();
+        seats.append(seat);
+    }
+    return seats;
 }
 
 QList<Session> Login1Manager::listSessions()
 {
     Q_D(Login1Manager);
-    QDBusPendingReply<QList<Session>> replay = d->m_inter->asyncCall(QStringLiteral("ListSessions"));
+    QDBusPendingReply<QList<Session_p>> replay = d->m_inter->asyncCall(QStringLiteral("ListSessions"));
     replay.waitForFinished();
+    QList<Session> sessions;
     if (!replay.isValid()) {
         d->m_errorMessage = replay.error().message();
         emit errorMessageChanged(d->m_errorMessage);
-        return QList<Session>();
+        return sessions;
     }
-    return replay.value();
+
+    for (auto &&session_p : replay.value()) {
+        Session session;
+        session.path = session_p.path.path();
+        session.seat_id = session_p.seat_id;
+        session.session_id = session_p.session_id;
+        session.user_id = session_p.user_id;
+        session.user_name = session_p.user_name;
+        sessions.append(session);
+    }
+    return sessions;
 }
 
 QList<User> Login1Manager::listUsers()
 {
     Q_D(Login1Manager);
-    QDBusPendingReply<QList<User>> replay = d->m_inter->asyncCall(QStringLiteral("ListUsers"));
+    QDBusPendingReply<QList<User_p>> replay = d->m_inter->asyncCall(QStringLiteral("ListUsers"));
     replay.waitForFinished();
+    QList<User> users;
     if (!replay.isValid()) {
         d->m_errorMessage = replay.error().message();
         emit errorMessageChanged(d->m_errorMessage);
-        return QList<User>();
+        return users;
     }
-    return replay.value();
+
+    for (auto &&user_p : replay.value()) {
+        User user;
+        user.user_name = user_p.user_name;
+        user.user_id = user_p.user_id;
+        user.path = user_p.path.path();
+        users.append(user);
+    }
+    return users;
 }
 
 void Login1Manager::lockSession(const QString &session_id)

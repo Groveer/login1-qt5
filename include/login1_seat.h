@@ -4,6 +4,7 @@
 
 #include "namespace.h"
 #include "login1_types.h"
+#include "src/login1_types_p.h"
 
 LOGIN1_BEGIN_NAMESPACE
 
@@ -36,7 +37,7 @@ public:
 
 signals:
     void errorMessageChanged(const QString &message);
-// properties changed
+    // properties changed
     void SessionsChanged(const QList<SessionPath> &value);
     void CanGraphicalChanged(const bool value);
     void CanTTYChanged(const bool value);
@@ -45,6 +46,9 @@ signals:
     void ActiveSessionChanged(const SessionPath &value);
     void IdleSinceHintChanged(const quint64 value);
     void IdleSinceHintMonotonicChanged(const quint64 value);
+    // private signals
+    void SessionsChanged(const QList<SessionPath_p> &value);
+    void ActiveSessionChanged(const SessionPath_p &value);
 
 public slots:
     void activateSession(const QString & session_id);

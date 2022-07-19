@@ -29,7 +29,6 @@ class DBusInterfacePrivate : public QObject
 
 public:
     explicit DBusInterfacePrivate(DBusInterface *interface, QObject *parent);
-    QVariant demarshall(const QMetaProperty &metaProperty, const QVariant &value);
     QVariant updateProp(const char *propname, const QVariant &value);
     void initDBusConnection();
     void setServiceValid(bool valid);

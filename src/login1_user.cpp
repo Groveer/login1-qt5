@@ -15,7 +15,7 @@ Login1User::Login1User(const QString &path, QObject *parent)
     const QString &Service = QStringLiteral("org.freedesktop.login1");
     const QString &Interface = QStringLiteral("org.freedesktop.login1.Seat");
 
-    SessionPath::registerMetaType();
+    SessionPath_p::registerMetaType();
 
     Q_D(Login1User);
     d->m_inter = new DBusInterface(Service, path, Interface, QDBusConnection::systemBus(), this);
@@ -26,7 +26,15 @@ Login1User::~Login1User() {}
 QList<SessionPath> Login1User::sessions() const
 {
     Q_D(const Login1User);
-    return qvariant_cast<QList<SessionPath>>(d->m_inter->property("Sessions"));
+    const auto &result = qvariant_cast<QList<SessionPath_p>>(d->m_inter->property("Sessions"));
+    QList<SessionPath> sessions;
+    for (auto && session_p : result) {
+        SessionPath session;
+        session.session_id = session_p.session_id;
+        session.path =session_p.path.path();
+        sessions.append(session);
+    }
+    return sessions;
 }
 
 bool Login1User::idleHint() const
@@ -74,7 +82,11 @@ QString Login1User::state() const
 SessionPath Login1User::display() const
 {
     Q_D(const Login1User);
-    return qvariant_cast<SessionPath>(d->m_inter->property("Display"));
+    const auto &result = qvariant_cast<SessionPath_p>(d->m_inter->property("Display"));
+    SessionPath session;
+    session.path = result.path.path();
+    session.session_id = result.session_id;
+    return session;
 }
 
 uint Login1User::GID() const

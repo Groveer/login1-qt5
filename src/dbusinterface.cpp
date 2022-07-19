@@ -53,34 +53,17 @@ DBusInterfacePrivate::DBusInterfacePrivate(DBusInterface *interface, QObject *pa
     interface->connection().connect(interface->service(), interface->path(), PropertiesInterface, PropertiesChanged, argumentMatch, QString(), this, SLOT(onPropertiesChanged(QString, QVariantMap, QStringList)));
 }
 
-QVariant DBusInterfacePrivate::demarshall(const QMetaProperty &metaProperty, const QVariant &value)
-{
-    if (value.userType() == metaProperty.userType())
-        return value;
-
-    QVariant result = QVariant(metaProperty.userType(), nullptr);
-    if (value.userType() == qMetaTypeId<QDBusArgument>()) {
-        QDBusArgument dbusArg = value.value<QDBusArgument>();
-        QDBusMetaType::demarshall(dbusArg, metaProperty.userType(), result.data());
-    }
-
-    return result;
-}
-
 QVariant DBusInterfacePrivate::updateProp(const char *propname, const QVariant &value)
 {
-    QVariant result;
     const QMetaObject *metaObj = m_parent->metaObject();
     int i = metaObj->indexOfProperty(propname);
     if (i != -1) {
-        QMetaProperty metaProperty = metaObj->property(i);
-        result = demarshall(metaProperty, value);
-        m_propertyMap.insert(propname, result);
-        QMetaObject::invokeMethod(m_parent, propname + QString("Changed").toLatin1(), Qt::DirectConnection, QGenericArgument(result.typeName(), result.data()));
+        m_propertyMap.insert(propname, value);
+        QMetaObject::invokeMethod(m_parent, propname + QString("Changed").toLatin1(), Qt::DirectConnection, QGenericArgument(value.typeName(), value.data()));
     } else
         qWarning() << "invalid property changed:" << propname << value;
 
-    return result;
+    return value;
 }
 
 void DBusInterfacePrivate::initDBusConnection()

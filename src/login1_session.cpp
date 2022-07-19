@@ -2,6 +2,7 @@
 
 #include "dbusinterface.h"
 #include "login1_session_p.h"
+#include "src/login1_types_p.h"
 #include <QDBusError>
 #include <qdbuspendingreply.h>
 #include <qdbusunixfiledescriptor.h>
@@ -17,9 +18,24 @@ Login1Session::Login1Session(const QString &path, QObject *parent)
     const QString &Interface = QStringLiteral("org.freedesktop.login1.Session");
 
     Q_D(Login1Session);
-    SeatPath::registerMetaType();
-    UserPath::registerMetaType();
+    SeatPath_p::registerMetaType();
+    UserPath_p::registerMetaType();
     d->m_inter = new DBusInterface(Service, path, Interface, QDBusConnection::systemBus(), this);
+
+    connect(this, qOverload<const SeatPath_p&>(&Login1Session::SeatChanged),
+            this, [this] (const SeatPath_p path_p) {
+                SeatPath path;
+                path.path = path_p.path.path();
+                path.seat_id = path_p.seat_id;
+                emit this->SeatChanged(path);
+            });
+    connect(this, qOverload<const UserPath_p&>(&Login1Session::UserChanged),
+            this, [this] (const UserPath_p path_p) {
+                UserPath path;
+                path.path = path_p.path.path();
+                path.user_id = path_p.user_id;
+                emit this->UserChanged(path);
+            });
 }
 
 Login1Session::~Login1Session(){};
@@ -117,12 +133,20 @@ QString Login1Session::type() const
 SeatPath Login1Session::seat() const
 {
     Q_D(const Login1Session);
-    return qvariant_cast<SeatPath>(d->m_inter->property("Seat"));
+    const auto &result = qvariant_cast<SeatPath_p>(d->m_inter->property("Seat"));
+    SeatPath seatPath;
+    seatPath.path = result.path.path();
+    seatPath.seat_id = result.seat_id;
+    return seatPath;
 }
 UserPath Login1Session::user() const
 {
     Q_D(const Login1Session);
-    return qvariant_cast<UserPath>(d->m_inter->property("User"));
+    const auto &result = qvariant_cast<UserPath_p>(d->m_inter->property("User"));
+    UserPath userPath;
+    userPath.path = result.path.path();
+    userPath.user_id = result.user_id;
+    return userPath;
 }
 
 uint Login1Session::audit() const
