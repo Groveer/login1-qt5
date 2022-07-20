@@ -59,6 +59,12 @@ QString Login1Seat::id() const
     return qvariant_cast<QString>(d->m_inter->property("Id"));
 }
 
+QString Login1Seat::lastError() const
+{
+    Q_D(const Login1Seat);
+    return d->m_errorMessage;
+}
+
 SessionPath Login1Seat::activeSession() const
 {
     Q_D(const Login1Seat);

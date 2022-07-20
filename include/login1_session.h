@@ -81,6 +81,7 @@ signals:
     void errorMessageChanged(const QString &message);
 
 public slots:
+    QString lastError() const;
     void activate();
     void kill(const QString who, const uint signal_number);
     void lock();

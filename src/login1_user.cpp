@@ -127,9 +127,9 @@ quint64 Login1User::timestampMonotonic() const
 
 // public slots
 
-QString Login1User::lastError()
+QString Login1User::lastError() const
 {
-    Q_D(Login1User);
+    Q_D(const Login1User);
     return d->m_errorMessage;
 }
 

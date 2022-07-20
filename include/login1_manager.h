@@ -114,7 +114,7 @@ signals:
 
 
 public slots:
-    QString lastError();
+    QString lastError() const;
     void activateSession(const QString &session_id);
     void activateSessionOnSeat(const QString &session_id, const QString &seat_id);
     void attachDevice(const QString &seat_id, const QString &sysfs_path, const bool interactive);

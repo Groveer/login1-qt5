@@ -281,9 +281,9 @@ quint64 Login1Manager::userStopDelayUSec() const
 
 // public slots
 
-QString Login1Manager::lastError()
+QString Login1Manager::lastError() const
 {
-    Q_D(Login1Manager);
+    Q_D(const Login1Manager);
     return d->m_errorMessage;
 }
 

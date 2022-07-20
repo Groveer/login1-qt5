@@ -174,6 +174,12 @@ quint64 Login1Session::timestampMonotonic() const
     return qvariant_cast<quint64>(d->m_inter->property("TimestampMonotonic"));
 }
 
+QString Login1Session::lastError() const
+{
+    Q_D(const Login1Session);
+    return d->m_errorMessage;
+}
+
 void Login1Session::activate()
 {
     Q_D(Login1Session);

@@ -53,7 +53,7 @@ signals:
     void errorMessageChanged(const QString &message);
 
 public slots:
-    QString lastError();
+    QString lastError() const;
     void kill(const int signal_number);
     void terminate();
 
