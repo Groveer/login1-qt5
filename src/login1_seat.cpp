@@ -19,26 +19,6 @@ Login1Seat::Login1Seat(const QString &path, QObject *parent)
     SessionPath_p::registerMetaType();
     Q_D(Login1Seat);
     d->m_inter = new DBusInterface(Service, path, Interface, QDBusConnection::systemBus(), this);
-
-    // init signals;
-    connect(this, qOverload<const QList<SessionPath_p>&>(&Login1Seat::SessionsChanged),
-            this, [this] (const QList<SessionPath_p> paths_p) {
-                QList<SessionPath> paths;
-                for (auto && path_p : paths_p) {
-                    SessionPath path;
-                    path.path = path_p.path.path();
-                    path.session_id = path_p.session_id;
-                    paths.append(path);
-                }
-                emit this->SessionsChanged(paths);
-            });
-    connect(this, qOverload<const SessionPath_p&>(&Login1Seat::ActiveSessionChanged),
-            this, [this] (const SessionPath_p path_p) {
-                SessionPath path;
-                path.path = path_p.path.path();
-                path.session_id = path_p.session_id;
-                emit this->ActiveSessionChanged(path);
-            });
 }
 
 QList<SessionPath> Login1Seat::sessions() const

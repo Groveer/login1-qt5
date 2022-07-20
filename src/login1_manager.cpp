@@ -37,37 +37,6 @@ Login1Manager::Login1Manager(QObject *parent)
     d->m_inter = new DBusInterface(Service, Path, Interface, QDBusConnection::systemBus(), this);
 
     // init signals;
-    connect(this, qOverload<const QString&, const QDBusObjectPath&>(&Login1Manager::SeatNew),
-            this, [this] (const QString& seat_id, const QDBusObjectPath &path) {
-                emit this->SeatNew(seat_id, path.path());
-            });
-    connect(this, qOverload<const QString&, const QDBusObjectPath&>(&Login1Manager::SeatRemoved),
-            this, [this] (const QString& seat_id, const QDBusObjectPath &path) {
-                emit this->SeatRemoved(seat_id, path.path());
-            });
-    connect(this, qOverload<const QString&, const QDBusObjectPath&>(&Login1Manager::SessionNew),
-            this, [this] (const QString& session_id, const QDBusObjectPath &path) {
-                emit this->SessionNew(session_id, path.path());
-            });
-    connect(this, qOverload<const QString&, const QDBusObjectPath&>(&Login1Manager::SessionRemoved),
-            this, [this] (const QString& session_id, const QDBusObjectPath &path) {
-                emit this->SessionRemoved(session_id, path.path());
-            });
-    connect(this, qOverload<const uint, const QDBusObjectPath&>(&Login1Manager::UserNew),
-            this, [this] (const uint uid, const QDBusObjectPath &path) {
-                emit this->UserNew(uid, path.path());
-            });
-    connect(this, qOverload<const uint, const QDBusObjectPath&>(&Login1Manager::UserRemoved),
-            this, [this] (const uint uid, const QDBusObjectPath &path) {
-                emit this->UserRemoved(uid, path.path());
-            });
-    connect(this, qOverload<const ScheduledShutdownValue_p&>(&Login1Manager::ScheduledShutdownChanged),
-            this, [this] (const ScheduledShutdownValue_p &value) {
-                ScheduledShutdownValue tempValue;
-                tempValue.type = value.type;
-                tempValue.usec = value.usec;
-                emit this->ScheduledShutdownChanged(tempValue);
-            });
     QDBusConnection::systemBus().connect(Service, Path, Interface, "PreparingForShutdown",
                                          this, SLOT(PreparingForShutdown(const bool)));
     QDBusConnection::systemBus().connect(Service, Path, Interface, "PreparingForSleep",

@@ -20,41 +20,41 @@ public:
     explicit Login1Manager(QObject *parent = nullptr);
     virtual ~Login1Manager();
 
-    Q_PROPERTY(QStringList KillExcludeUsers READ killExcludeUsers NOTIFY KillExcludeUsersChanged)
-    Q_PROPERTY(QStringList KillOnlyUsers READ killOnlyUsers NOTIFY KillOnlyUsersChanged)
-    Q_PROPERTY(bool Docked READ docked NOTIFY DockedChanged)
-    Q_PROPERTY(bool EnableWallMessages READ enableWallMessages WRITE setEnableWallMessages NOTIFY EnableWallMessagesChanged);
-    Q_PROPERTY(bool IdleHint READ idleHint NOTIFY IdleHintChanged);
-    Q_PROPERTY(bool KillUserProcesses READ killUserProcesses NOTIFY KillUserProcessesChanged);
-    Q_PROPERTY(bool LidClosed READ lidClosed NOTIFY LidClosedChanged);
-    Q_PROPERTY(bool OnExternalPower READ onExternalPower NOTIFY OnExternalPowerChanged);
-    Q_PROPERTY(bool PreparingForShutdown READ preparingForShutdown NOTIFY PreparingForShutdownChanged);
-    Q_PROPERTY(bool PreparingForSleep READ preparingForSleep NOTIFY PreparingForSleepChanged);
-    Q_PROPERTY(bool RebootToFirmwareSetup READ rebootToFirmwareSetup NOTIFY RebootToFirmwareSetupChanged);
-    Q_PROPERTY(bool RemoveIPC READ removeIPC NOTIFY RemoveIPCChanged);
-    Q_PROPERTY(QString BlockInhibited READ blockInhibited NOTIFY BlockInhibitedChanged);
-    Q_PROPERTY(QString DelayInhibited READ delayInhibited NOTIFY DelayInhibitedChanged);
-    Q_PROPERTY(QString HandleHibernateKey READ handleHibernateKey NOTIFY HandleHibernateKeyChanged);
-    Q_PROPERTY(QString HandleLidSwitch READ handleLidSwitch NOTIFY HandleLidSwitchChanged);
-    Q_PROPERTY(QString HandleLidSwitchDocked READ handleLidSwitchDocked NOTIFY HandleLidSwitchDockedChanged);
-    Q_PROPERTY(QString HandleLidSwitchExternalPower READ handleLidSwitchExternalPower NOTIFY HandleLidSwitchExternalPowerChanged);
-    Q_PROPERTY(QString HandlePowerKey READ handlePowerKey NOTIFY HandlePowerKeyChanged);
-    Q_PROPERTY(QString HandleSuspendKey READ handleSuspendKey NOTIFY HandleSuspendKeyChanged);
-    Q_PROPERTY(QString IdleAction READ idleAction NOTIFY IdleActionChanged);
-    Q_PROPERTY(QString WallMessage READ wallMessage WRITE setWallMessage NOTIFY WallMessageChanged);
-    Q_PROPERTY(ScheduledShutdownValue ScheduledShutdown READ scheduledShutdown NOTIFY ScheduledShutdownChanged);
-    Q_PROPERTY(uint NAutoVTs READ nAutoVTs NOTIFY NAutoVTsChanged);
-    Q_PROPERTY(quint64 HoldoffTimeoutUSec READ holdoffTimeoutUSec NOTIFY HoldoffTimeoutUSecChanged);
-    Q_PROPERTY(quint64 IdleActionUSec READ idleActionUSec NOTIFY IdleActionUSecChanged);
-    Q_PROPERTY(quint64 IdleSinceHint READ idleSinceHint NOTIFY IdleSinceHintChanged);
-    Q_PROPERTY(quint64 IdleSinceHintMonotonic READ idleSinceHintMonotonic NOTIFY IdleSinceHintMonotonicChanged);
-    Q_PROPERTY(quint64 InhibitDelayMaxUSec READ inhibitDelayMaxUSec NOTIFY InhibitDelayMaxUSecChanged);
-    Q_PROPERTY(quint64 InhibitorsMax READ inhibitorsMax NOTIFY InhibitorsMaxChanged);
-    Q_PROPERTY(quint64 NCurrentInhibitors READ nCurrentInhibitors NOTIFY NCurrentInhibitorsChanged);
-    Q_PROPERTY(quint64 NCurrentSessions READ nCurrentSessions NOTIFY NCurrentSessionsChanged);
-    Q_PROPERTY(quint64 RuntimeDirectorySize READ runtimeDirectorySize NOTIFY RuntimeDirectorySizeChanged);
-    Q_PROPERTY(quint64 SessionMax READ sessionMax NOTIFY SessionMaxChanged);
-    Q_PROPERTY(quint64 UserStopDelayUSec READ userStopDelayUSec NOTIFY UserStopDelayUSecChanged);
+    Q_PROPERTY(QStringList KillExcludeUsers READ killExcludeUsers)
+    Q_PROPERTY(QStringList KillOnlyUsers READ killOnlyUsers)
+    Q_PROPERTY(bool Docked READ docked)
+    Q_PROPERTY(bool EnableWallMessages READ enableWallMessages WRITE setEnableWallMessages);
+    Q_PROPERTY(bool IdleHint READ idleHint);
+    Q_PROPERTY(bool KillUserProcesses READ killUserProcesses);
+    Q_PROPERTY(bool LidClosed READ lidClosed);
+    Q_PROPERTY(bool OnExternalPower READ onExternalPower);
+    Q_PROPERTY(bool PreparingForShutdown READ preparingForShutdown);
+    Q_PROPERTY(bool PreparingForSleep READ preparingForSleep);
+    Q_PROPERTY(bool RebootToFirmwareSetup READ rebootToFirmwareSetup);
+    Q_PROPERTY(bool RemoveIPC READ removeIPC);
+    Q_PROPERTY(QString BlockInhibited READ blockInhibited);
+    Q_PROPERTY(QString DelayInhibited READ delayInhibited);
+    Q_PROPERTY(QString HandleHibernateKey READ handleHibernateKey);
+    Q_PROPERTY(QString HandleLidSwitch READ handleLidSwitch);
+    Q_PROPERTY(QString HandleLidSwitchDocked READ handleLidSwitchDocked);
+    Q_PROPERTY(QString HandleLidSwitchExternalPower READ handleLidSwitchExternalPower);
+    Q_PROPERTY(QString HandlePowerKey READ handlePowerKey);
+    Q_PROPERTY(QString HandleSuspendKey READ handleSuspendKey);
+    Q_PROPERTY(QString IdleAction READ idleAction);
+    Q_PROPERTY(QString WallMessage READ wallMessage WRITE setWallMessage);
+    Q_PROPERTY(ScheduledShutdownValue ScheduledShutdown READ scheduledShutdown);
+    Q_PROPERTY(uint NAutoVTs READ nAutoVTs);
+    Q_PROPERTY(quint64 HoldoffTimeoutUSec READ holdoffTimeoutUSec);
+    Q_PROPERTY(quint64 IdleActionUSec READ idleActionUSec);
+    Q_PROPERTY(quint64 IdleSinceHint READ idleSinceHint);
+    Q_PROPERTY(quint64 IdleSinceHintMonotonic READ idleSinceHintMonotonic);
+    Q_PROPERTY(quint64 InhibitDelayMaxUSec READ inhibitDelayMaxUSec);
+    Q_PROPERTY(quint64 InhibitorsMax READ inhibitorsMax);
+    Q_PROPERTY(quint64 NCurrentInhibitors READ nCurrentInhibitors);
+    Q_PROPERTY(quint64 NCurrentSessions READ nCurrentSessions);
+    Q_PROPERTY(quint64 RuntimeDirectorySize READ runtimeDirectorySize);
+    Q_PROPERTY(quint64 SessionMax READ sessionMax);
+    Q_PROPERTY(quint64 UserStopDelayUSec READ userStopDelayUSec);
 
     QStringList killExcludeUsers() const;
     QStringList killOnlyUsers() const;
@@ -103,42 +103,6 @@ signals:
     void SessionRemoved(const QString &session_id, const QString &session_path);
     void UserNew(const uint uid, const QString &path);
     void UserRemoved(const uint uid, const QString &path);
-    // properties changed
-    void KillExcludeUsersChanged(const QStringList &users);
-    void KillOnlyUsersChanged(const QStringList &users);
-    void DockedChanged(const bool value);
-    void EnableWallMessagesChanged(const bool value);
-    void IdleHintChanged(const bool value);
-    void KillUserProcessesChanged(const bool value);
-    void LidClosedChanged(const bool value);
-    void OnExternalPowerChanged(const bool value);
-    void PreparingForShutdownChanged(const bool value);
-    void PreparingForSleepChanged(const bool value);
-    void RebootToFirmwareSetupChanged(const bool value);
-    void RemoveIPCChanged(const bool value);
-    void BlockInhibitedChanged(const QString &value);
-    void DelayInhibitedChanged(const QString &value);
-    void HandleHibernateKeyChanged(const QString &value);
-    void HandleLidSwitchChanged(const QString &value);
-    void HandleLidSwitchDockedChanged(const QString &value);
-    void HandleLidSwitchExternalPowerChanged(const QString &value);
-    void HandlePowerKeyChanged(const QString &value);
-    void HandleSuspendKeyChanged(const QString &value);
-    void IdleActionChanged(const QString &value);
-    void WallMessageChanged(const QString &value);
-    void ScheduledShutdownChanged(const ScheduledShutdownValue &value);
-    void NAutoVTsChanged(const uint value);
-    void HoldoffTimeoutUSecChanged(const quint64 value);
-    void IdleActionUSecChanged(const quint64 value);
-    void IdleSinceHintChanged(const quint64 value);
-    void IdleSinceHintMonotonicChanged(const quint64 value);
-    void InhibitDelayMaxUSecChanged(const quint64 value);
-    void InhibitorsMaxChanged(const quint64 value);
-    void NCurrentInhibitorsChanged(const quint64 value);
-    void NCurrentSessionsChanged(const quint64 value);
-    void RuntimeDirectorySizeChanged(const quint64 value);
-    void SessionMaxChanged(const quint64 value);
-    void UserStopDelayUSecChanged(const quint64 value);
     // private signals
     void ScheduledShutdownChanged(const ScheduledShutdownValue_p &value);
     void SeatNew(const QString &seat_id, const QDBusObjectPath &seat_path);

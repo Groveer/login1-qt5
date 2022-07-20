@@ -16,35 +16,35 @@ class Login1Session : public QObject
 public:
     explicit Login1Session(const QString &path, QObject *parent = nullptr);
     virtual ~Login1Session();
-    Q_PROPERTY(bool Active READ active NOTIFY ActiveChanged)
-    Q_PROPERTY(bool IdleHint READ idleHint NOTIFY IdleHintChanged)
-    Q_PROPERTY(bool LockedHint READ lockedHint NOTIFY LockedHintChanged)
-    Q_PROPERTY(bool Remote READ remote NOTIFY RemoteChanged)
-    Q_PROPERTY(QString Class READ _class NOTIFY ClassChanged)
-    Q_PROPERTY(QString Desktop READ desktop NOTIFY DesktopChanged)
-    Q_PROPERTY(QString Display READ display NOTIFY DisplayChanged)
-    Q_PROPERTY(QString Id READ id NOTIFY IdChanged)
-    Q_PROPERTY(QString Name READ name NOTIFY NameChanged)
-    Q_PROPERTY(QString RemoteHost READ remoteHost NOTIFY RemoteHostChanged)
-    Q_PROPERTY(QString RemoteUser READ remoteUser NOTIFY RemoteUserChanged)
-    Q_PROPERTY(QString Scope READ scope NOTIFY ScopeChanged)
-    Q_PROPERTY(QString Service READ service NOTIFY ServiceChanged)
-    Q_PROPERTY(QString State READ state NOTIFY StateChanged)
+    Q_PROPERTY(bool Active READ active)
+    Q_PROPERTY(bool IdleHint READ idleHint)
+    Q_PROPERTY(bool LockedHint READ lockedHint)
+    Q_PROPERTY(bool Remote READ remote)
+    Q_PROPERTY(QString Class READ _class)
+    Q_PROPERTY(QString Desktop READ desktop)
+    Q_PROPERTY(QString Display READ display)
+    Q_PROPERTY(QString Id READ id)
+    Q_PROPERTY(QString Name READ name)
+    Q_PROPERTY(QString RemoteHost READ remoteHost)
+    Q_PROPERTY(QString RemoteUser READ remoteUser)
+    Q_PROPERTY(QString Scope READ scope)
+    Q_PROPERTY(QString Service READ service)
+    Q_PROPERTY(QString State READ state)
     // Why TTY?
-    Q_PROPERTY(QString TTY READ tty NOTIFY TTYChanged)
-    Q_PROPERTY(QString Type READ type NOTIFY TypeChanged)
+    Q_PROPERTY(QString TTY READ tty)
+    Q_PROPERTY(QString Type READ type)
 
-    Q_PROPERTY(SeatPath Seat READ seat NOTIFY SeatChanged)
-    Q_PROPERTY(UserPath User READ user NOTIFY UserChanged)
+    Q_PROPERTY(SeatPath Seat READ seat)
+    Q_PROPERTY(UserPath User READ user)
 
-    Q_PROPERTY(uint Audit READ audit NOTIFY AuditChanged)
-    Q_PROPERTY(uint Leader READ leader NOTIFY LeaderChanged)
-    Q_PROPERTY(uint VTNr READ vtnr NOTIFY VTNrChanged)
+    Q_PROPERTY(uint Audit READ audit)
+    Q_PROPERTY(uint Leader READ leader)
+    Q_PROPERTY(uint VTNr READ vtnr)
 
-    Q_PROPERTY(quint64 IdleSinceHint READ idleSinceHint NOTIFY IdleSinceHintChanged)
-    Q_PROPERTY(quint64 IdleSinceHintMonotonic READ idleSinceHintMonotonic NOTIFY IdleSinceHintMonotonicChanged)
-    Q_PROPERTY(quint64 Timestamp READ timestamp NOTIFY TimestampChanged)
-    Q_PROPERTY(quint64 TimestampMonotonic READ timestampMonotonic NOTIFY TimestampMonotonicChanged)
+    Q_PROPERTY(quint64 IdleSinceHint READ idleSinceHint)
+    Q_PROPERTY(quint64 IdleSinceHintMonotonic READ idleSinceHintMonotonic)
+    Q_PROPERTY(quint64 Timestamp READ timestamp)
+    Q_PROPERTY(quint64 TimestampMonotonic READ timestampMonotonic)
 
     bool active() const;
     bool idleHint() const;
@@ -79,36 +79,6 @@ signals:
     void ResumeDevice(const uint value, const uint device, const int descriptor);
     void Unlock();
     void errorMessageChanged(const QString &message);
-    // properties changed
-    void ActiveChanged(const bool value);
-    void IdleHintChanged(const bool value);
-    void LockedHintChanged(const bool value);
-    void RemoteChanged(const bool value);
-    void ClassChanged(const QString &value);
-    void DesktopChanged(const QString &value);
-    void DisplayChanged(const QString &value);
-    void IdChanged(const QString &value);
-    void NameChanged(const QString &value);
-    void RemoteHostChanged(const QString &value);
-    void RemoteUserChanged(const QString &value);
-    void ScopeChanged(const QString &value);
-    void ServiceChanged(const QString &value);
-    void StateChanged(const QString &value);
-    void TTYChanged(const QString &value);
-    void TypeChanged(const QString &value);
-    void SeatChanged(const SeatPath &value);
-    void UserChanged(const UserPath &value);
-    void AuditChanged(const uint value);
-    void LeaderChanged(const uint value);
-    void VTNrChanged(const uint value);
-    void IdleSinceHintChanged(const quint64 value);
-    void IdleSinceHintMonotonicChanged(const quint64 value);
-    void TimestampChanged(const quint64 value);
-    void TimestampMonotonicChanged(const quint64 value);
-
-    // private signals
-    void SeatChanged(const SeatPath_p &value);
-    void UserChanged(const UserPath_p &value);
 
 public slots:
     void activate();

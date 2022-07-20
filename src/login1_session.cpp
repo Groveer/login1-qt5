@@ -21,21 +21,6 @@ Login1Session::Login1Session(const QString &path, QObject *parent)
     SeatPath_p::registerMetaType();
     UserPath_p::registerMetaType();
     d->m_inter = new DBusInterface(Service, path, Interface, QDBusConnection::systemBus(), this);
-
-    connect(this, qOverload<const SeatPath_p&>(&Login1Session::SeatChanged),
-            this, [this] (const SeatPath_p path_p) {
-                SeatPath path;
-                path.path = path_p.path.path();
-                path.seat_id = path_p.seat_id;
-                emit this->SeatChanged(path);
-            });
-    connect(this, qOverload<const UserPath_p&>(&Login1Session::UserChanged),
-            this, [this] (const UserPath_p path_p) {
-                UserPath path;
-                path.path = path_p.path.path();
-                path.user_id = path_p.user_id;
-                emit this->UserChanged(path);
-            });
 }
 
 Login1Session::~Login1Session(){};

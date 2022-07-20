@@ -17,14 +17,14 @@ public:
     explicit Login1Seat(const QString &path, QObject *parent = nullptr);
     virtual ~Login1Seat();
 
-    Q_PROPERTY(QList<SessionPath> Sessions READ sessions NOTIFY SessionsChanged)
-    Q_PROPERTY(bool CanGraphical READ canGraphical  NOTIFY CanGraphicalChanged)
-    Q_PROPERTY(bool CanTTY READ canTTY NOTIFY CanTTYChanged)
-    Q_PROPERTY(bool IdleHint READ idleHint NOTIFY IdleHintChanged)
-    Q_PROPERTY(QString Id READ id NOTIFY IdChanged)
-    Q_PROPERTY(SessionPath ActiveSession READ activeSession NOTIFY ActiveSessionChanged)
-    Q_PROPERTY(quint64 IdleSinceHint READ idleSinceHint NOTIFY IdleSinceHintChanged)
-    Q_PROPERTY(quint64 IdleSinceHintMonotonic READ idleSinceHintMonotonic NOTIFY IdleSinceHintMonotonicChanged)
+    Q_PROPERTY(QList<SessionPath> Sessions READ sessions)
+    Q_PROPERTY(bool CanGraphical READ canGraphical)
+    Q_PROPERTY(bool CanTTY READ canTTY)
+    Q_PROPERTY(bool IdleHint READ idleHint)
+    Q_PROPERTY(QString Id READ id)
+    Q_PROPERTY(SessionPath ActiveSession READ activeSession)
+    Q_PROPERTY(quint64 IdleSinceHint READ idleSinceHint)
+    Q_PROPERTY(quint64 IdleSinceHintMonotonic READ idleSinceHintMonotonic)
 
     bool canGraphical() const;
     bool canTTY() const;
@@ -37,15 +37,6 @@ public:
 
 signals:
     void errorMessageChanged(const QString &message);
-    // properties changed
-    void SessionsChanged(const QList<SessionPath> &value);
-    void CanGraphicalChanged(const bool value);
-    void CanTTYChanged(const bool value);
-    void IdleHintChanged(const bool value);
-    void IdChanged(const QString &value);
-    void ActiveSessionChanged(const SessionPath &value);
-    void IdleSinceHintChanged(const quint64 value);
-    void IdleSinceHintMonotonicChanged(const quint64 value);
     // private signals
     void SessionsChanged(const QList<SessionPath_p> &value);
     void ActiveSessionChanged(const SessionPath_p &value);
