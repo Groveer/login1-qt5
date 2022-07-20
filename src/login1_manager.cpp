@@ -191,6 +191,18 @@ QString Login1Manager::idleAction() const
     return qvariant_cast<QString>(d->m_inter->property("LdleAction"));
 }
 
+QString Login1Manager::rebootParameter() const
+{
+    Q_D(const Login1Manager);
+    return qvariant_cast<QString>(d->m_inter->property("RebootParameter"));
+}
+
+QString Login1Manager::rebootToBootLoaderEntry() const
+{
+    Q_D(const Login1Manager);
+    return qvariant_cast<QString>(d->m_inter->property("RebootToBootLoaderEntry"));
+}
+
 QString Login1Manager::wallMessage() const
 {
     Q_D(const Login1Manager);

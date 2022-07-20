@@ -41,6 +41,8 @@ public:
     Q_PROPERTY(QString HandlePowerKey READ handlePowerKey);
     Q_PROPERTY(QString HandleSuspendKey READ handleSuspendKey);
     Q_PROPERTY(QString IdleAction READ idleAction);
+    Q_PROPERTY(QString RebootParameter READ rebootParameter);
+    Q_PROPERTY(QString RebootToBootLoaderEntry READ rebootToBootLoaderEntry);
     Q_PROPERTY(QString WallMessage READ wallMessage WRITE setWallMessage);
     Q_PROPERTY(ScheduledShutdownValue ScheduledShutdown READ scheduledShutdown);
     Q_PROPERTY(uint NAutoVTs READ nAutoVTs);
@@ -78,6 +80,8 @@ public:
     QString handlePowerKey() const;
     QString handleSuspendKey() const;
     QString idleAction() const;
+    QString rebootParameter() const;
+    QString rebootToBootLoaderEntry() const;
     QString wallMessage() const;
     ScheduledShutdownValue scheduledShutdown() const;
     uint nAutoVTs() const;
