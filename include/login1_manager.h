@@ -24,7 +24,7 @@ public:
     Q_PROPERTY(QStringList KillOnlyUsers READ killOnlyUsers NOTIFY KillOnlyUsersChanged)
     Q_PROPERTY(bool Docked READ docked NOTIFY DockedChanged)
     Q_PROPERTY(bool EnableWallMessages READ enableWallMessages WRITE setEnableWallMessages NOTIFY EnableWallMessagesChanged);
-    Q_PROPERTY(bool LdleHint READ ldleHint NOTIFY LdleHintChanged);
+    Q_PROPERTY(bool IdleHint READ idleHint NOTIFY IdleHintChanged);
     Q_PROPERTY(bool KillUserProcesses READ killUserProcesses NOTIFY KillUserProcessesChanged);
     Q_PROPERTY(bool LidClosed READ lidClosed NOTIFY LidClosedChanged);
     Q_PROPERTY(bool OnExternalPower READ onExternalPower NOTIFY OnExternalPowerChanged);
@@ -40,14 +40,14 @@ public:
     Q_PROPERTY(QString HandleLidSwitchExternalPower READ handleLidSwitchExternalPower NOTIFY HandleLidSwitchExternalPowerChanged);
     Q_PROPERTY(QString HandlePowerKey READ handlePowerKey NOTIFY HandlePowerKeyChanged);
     Q_PROPERTY(QString HandleSuspendKey READ handleSuspendKey NOTIFY HandleSuspendKeyChanged);
-    Q_PROPERTY(QString LdleAction READ ldleAction NOTIFY LdleActionChanged);
+    Q_PROPERTY(QString IdleAction READ idleAction NOTIFY IdleActionChanged);
     Q_PROPERTY(QString WallMessage READ wallMessage WRITE setWallMessage NOTIFY WallMessageChanged);
     Q_PROPERTY(ScheduledShutdownValue ScheduledShutdown READ scheduledShutdown NOTIFY ScheduledShutdownChanged);
     Q_PROPERTY(uint NAutoVTs READ nAutoVTs NOTIFY NAutoVTsChanged);
     Q_PROPERTY(quint64 HoldoffTimeoutUSec READ holdoffTimeoutUSec NOTIFY HoldoffTimeoutUSecChanged);
-    Q_PROPERTY(quint64 LdleActionUSec READ ldleActionUSec NOTIFY LdleActionUSecChanged);
-    Q_PROPERTY(quint64 LdleSinceHint READ ldleSinceHint NOTIFY LdleSinceHintChanged);
-    Q_PROPERTY(quint64 LdleSinceHintMonotonic READ ldleSinceHintMonotonic NOTIFY LdleSinceHintMonotonicChanged);
+    Q_PROPERTY(quint64 IdleActionUSec READ idleActionUSec NOTIFY IdleActionUSecChanged);
+    Q_PROPERTY(quint64 IdleSinceHint READ idleSinceHint NOTIFY IdleSinceHintChanged);
+    Q_PROPERTY(quint64 IdleSinceHintMonotonic READ idleSinceHintMonotonic NOTIFY IdleSinceHintMonotonicChanged);
     Q_PROPERTY(quint64 InhibitDelayMaxUSec READ inhibitDelayMaxUSec NOTIFY InhibitDelayMaxUSecChanged);
     Q_PROPERTY(quint64 InhibitorsMax READ inhibitorsMax NOTIFY InhibitorsMaxChanged);
     Q_PROPERTY(quint64 NCurrentInhibitors READ nCurrentInhibitors NOTIFY NCurrentInhibitorsChanged);
@@ -61,7 +61,7 @@ public:
     bool docked() const;
     bool enableWallMessages() const;
     void setEnableWallMessages(const bool enable);
-    bool ldleHint() const;
+    bool idleHint() const;
     bool killUserProcesses() const;
     bool lidClosed() const;
     bool onExternalPower() const;
@@ -77,14 +77,14 @@ public:
     QString handleLidSwitchExternalPower() const;
     QString handlePowerKey() const;
     QString handleSuspendKey() const;
-    QString ldleAction() const;
+    QString idleAction() const;
     QString wallMessage() const;
     ScheduledShutdownValue scheduledShutdown() const;
     uint nAutoVTs() const;
     quint64 holdoffTimeoutUSec() const;
-    quint64 ldleActionUSec() const;
-    quint64 ldleSinceHint() const;
-    quint64 ldleSinceHintMonotonic() const;
+    quint64 idleActionUSec() const;
+    quint64 idleSinceHint() const;
+    quint64 idleSinceHintMonotonic() const;
     quint64 inhibitDelayMaxUSec() const;
     quint64 inhibitorsMax() const;
     quint64 nCurrentInhibitors() const;
@@ -108,7 +108,7 @@ signals:
     void KillOnlyUsersChanged(const QStringList &users);
     void DockedChanged(const bool value);
     void EnableWallMessagesChanged(const bool value);
-    void LdleHintChanged(const bool value);
+    void IdleHintChanged(const bool value);
     void KillUserProcessesChanged(const bool value);
     void LidClosedChanged(const bool value);
     void OnExternalPowerChanged(const bool value);
@@ -124,14 +124,14 @@ signals:
     void HandleLidSwitchExternalPowerChanged(const QString &value);
     void HandlePowerKeyChanged(const QString &value);
     void HandleSuspendKeyChanged(const QString &value);
-    void LdleActionChanged(const QString &value);
+    void IdleActionChanged(const QString &value);
     void WallMessageChanged(const QString &value);
     void ScheduledShutdownChanged(const ScheduledShutdownValue &value);
     void NAutoVTsChanged(const uint value);
     void HoldoffTimeoutUSecChanged(const quint64 value);
-    void LdleActionUSecChanged(const quint64 value);
-    void LdleSinceHintChanged(const quint64 value);
-    void LdleSinceHintMonotonicChanged(const quint64 value);
+    void IdleActionUSecChanged(const quint64 value);
+    void IdleSinceHintChanged(const quint64 value);
+    void IdleSinceHintMonotonicChanged(const quint64 value);
     void InhibitDelayMaxUSecChanged(const quint64 value);
     void InhibitorsMaxChanged(const quint64 value);
     void NCurrentInhibitorsChanged(const quint64 value);

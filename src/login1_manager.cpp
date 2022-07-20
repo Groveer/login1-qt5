@@ -120,7 +120,7 @@ void Login1Manager::setEnableWallMessages(const bool enable)
     d->m_inter->setProperty("EnableWallMessages", QVariant::fromValue(enable));
 }
 
-bool Login1Manager::ldleHint() const
+bool Login1Manager::idleHint() const
 {
     Q_D(const Login1Manager);
     return qvariant_cast<bool>(d->m_inter->property("LdleHint"));
@@ -216,7 +216,7 @@ QString Login1Manager::handleSuspendKey() const
     return qvariant_cast<QString>(d->m_inter->property("HandleSuspendKey"));
 }
 
-QString Login1Manager::ldleAction() const
+QString Login1Manager::idleAction() const
 {
     Q_D(const Login1Manager);
     return qvariant_cast<QString>(d->m_inter->property("LdleAction"));
@@ -250,19 +250,19 @@ quint64 Login1Manager::holdoffTimeoutUSec() const
     return qvariant_cast<quint64>(d->m_inter->property("HoldoffTimeoutUSec"));
 }
 
-quint64 Login1Manager::ldleActionUSec() const
+quint64 Login1Manager::idleActionUSec() const
 {
     Q_D(const Login1Manager);
     return qvariant_cast<quint64>(d->m_inter->property("LdleActionUSec"));
 }
 
-quint64 Login1Manager::ldleSinceHint() const
+quint64 Login1Manager::idleSinceHint() const
 {
     Q_D(const Login1Manager);
     return qvariant_cast<quint64>(d->m_inter->property("LdleSinceHint"));
 }
 
-quint64 Login1Manager::ldleSinceHintMonotonic() const
+quint64 Login1Manager::idleSinceHintMonotonic() const
 {
     Q_D(const Login1Manager);
     return qvariant_cast<quint64>(d->m_inter->property("LdleSinceHintMonotonic"));
