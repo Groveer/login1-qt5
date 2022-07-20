@@ -1,18 +1,30 @@
 #pragma once
 
 #include "include/namespace.h"
+#include "login1_manager.h"
 #include <qobject.h>
 
 class DBusInterface;
 LOGIN1_BEGIN_NAMESPACE
-class Login1Manager;
 
 class Login1ManagerPrivate : public QObject
 {
     Q_OBJECT
 public:
-    explicit Login1ManagerPrivate(Login1Manager *parent = nullptr) : q_ptr(parent) {}
+    explicit Login1ManagerPrivate(Login1Manager *parent = nullptr) : QObject(parent), q_ptr(parent) {}
 
+signals:
+    // private signals
+    void PrepareForShutdown(const bool value);
+    void PrepareForSleep(const bool value);
+    void SeatNew(const QString &seat_id, const QDBusObjectPath &seat_path);
+    void SeatRemoved(const QString &seat_id, const QDBusObjectPath &seat_path);
+    void SessionNew(const QString &session_id, const QDBusObjectPath &session_path);
+    void SessionRemoved(const QString &session_id, const QDBusObjectPath &session_path);
+    void UserNew(const uint uid, const QDBusObjectPath &path);
+    void UserRemoved(const uint uid, const QDBusObjectPath &path);
+
+public:
     QString m_errorMessage;
     DBusInterface *m_inter;
     Login1Manager *q_ptr;

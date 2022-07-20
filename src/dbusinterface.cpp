@@ -56,10 +56,11 @@ DBusInterfacePrivate::DBusInterfacePrivate(DBusInterface *interface, QObject *pa
 QVariant DBusInterfacePrivate::updateProp(const char *propname, const QVariant &value)
 {
     const QMetaObject *metaObj = m_parent->metaObject();
-    int i = metaObj->indexOfProperty(propname);
+    const char *signalName = propname + QStringLiteral("Changed").toLatin1();
+    int i = metaObj->indexOfSignal(signalName);
     if (i != -1) {
         m_propertyMap.insert(propname, value);
-        QMetaObject::invokeMethod(m_parent, propname + QString("Changed").toLatin1(), Qt::DirectConnection, QGenericArgument(value.typeName(), value.data()));
+        QMetaObject::invokeMethod(m_parent, signalName, Qt::DirectConnection, QGenericArgument(value.typeName(), value.data()));
     } else
         qWarning() << "invalid property changed:" << propname << value;
 

@@ -34,25 +34,45 @@ Login1Manager::Login1Manager(QObject *parent)
     Seat_p::registerMetaType();
     Session_p::registerMetaType();
     User_p::registerMetaType();
-    d->m_inter = new DBusInterface(Service, Path, Interface, QDBusConnection::systemBus(), this);
+    d->m_inter = new DBusInterface(Service, Path, Interface, QDBusConnection::systemBus(), d);
 
     // init signals;
     QDBusConnection::systemBus().connect(Service, Path, Interface, "PreparingForShutdown",
-                                         this, SLOT(PreparingForShutdown(const bool)));
+                                         d, SLOT(PrepareForShutdown(const bool)));
     QDBusConnection::systemBus().connect(Service, Path, Interface, "PreparingForSleep",
-                                         this, SLOT(PreparingForSleep(const bool)));
+                                         d, SLOT(PrepareForSleep(const bool)));
     QDBusConnection::systemBus().connect(Service, Path, Interface, "SeatNew",
-                                         this, SLOT(SeatNew(const QString&, const QDBusObjectPath&)));
+                                         d, SLOT(SeatNew(const QString&, const QDBusObjectPath&)));
     QDBusConnection::systemBus().connect(Service, Path, Interface, "SeatRemoved",
-                                         this, SLOT(SeatRemoved(const QString&, const QDBusObjectPath&)));
+                                         d, SLOT(SeatRemoved(const QString&, const QDBusObjectPath&)));
     QDBusConnection::systemBus().connect(Service, Path, Interface, "SessionNew",
-                                         this, SLOT(SessionNew(const QString&, const QDBusObjectPath&)));
+                                         d, SLOT(SessionNew(const QString&, const QDBusObjectPath&)));
     QDBusConnection::systemBus().connect(Service, Path, Interface, "SessionRemoved",
-                                         this, SLOT(SessionRemoved(const QString&, const QDBusObjectPath&)));
+                                         d, SLOT(SessionRemoved(const QString&, const QDBusObjectPath&)));
     QDBusConnection::systemBus().connect(Service, Path, Interface, "UserNew",
-                                         this, SLOT(UserNew(const QString&, const QDBusObjectPath&)));
+                                         d, SLOT(UserNew(const uint, const QDBusObjectPath&)));
     QDBusConnection::systemBus().connect(Service, Path, Interface, "UserRemoved",
-                                         this, SLOT(UserRemoved(const QString&, const QDBusObjectPath&)));
+                                         d, SLOT(UserRemoved(const uint, const QDBusObjectPath&)));
+    connect(d, &Login1ManagerPrivate::PrepareForShutdown, this, &Login1Manager::PrepareForShutdown);
+    connect(d, &Login1ManagerPrivate::PrepareForSleep, this, &Login1Manager::PrepareForSleep);
+    connect(d, &Login1ManagerPrivate::SeatNew, this, [this] (const QString &seat_id, const QDBusObjectPath &path) {
+                emit this->SeatNew(seat_id, path.path());
+            });
+    connect(d, &Login1ManagerPrivate::SeatRemoved, this, [this] (const QString &seat_id, const QDBusObjectPath &path) {
+                emit this->SeatRemoved(seat_id, path.path());
+            });
+    connect(d, &Login1ManagerPrivate::SessionNew, this, [this] (const QString &session_id, const QDBusObjectPath &path) {
+                emit this->SessionNew(session_id, path.path());
+            });
+    connect(d, &Login1ManagerPrivate::SessionRemoved, this, [this] (const QString &session_id, const QDBusObjectPath &path) {
+                emit this->SessionRemoved(session_id, path.path());
+            });
+    connect(d, &Login1ManagerPrivate::UserNew, this, [this] (const uint uid, const QDBusObjectPath &path) {
+                emit this->UserNew(uid, path.path());
+            });
+    connect(d, &Login1ManagerPrivate::UserRemoved, this, [this] (const uint uid, const QDBusObjectPath &path) {
+                emit this->UserRemoved(uid, path.path());
+            });
 }
 
 Login1Manager::~Login1Manager() {}

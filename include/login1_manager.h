@@ -107,15 +107,6 @@ signals:
     void SessionRemoved(const QString &session_id, const QString &session_path);
     void UserNew(const uint uid, const QString &path);
     void UserRemoved(const uint uid, const QString &path);
-    // private signals
-    void ScheduledShutdownChanged(const ScheduledShutdownValue_p &value);
-    void SeatNew(const QString &seat_id, const QDBusObjectPath &seat_path);
-    void SeatRemoved(const QString &seat_id, const QDBusObjectPath &seat_path);
-    void SessionNew(const QString &session_id, const QDBusObjectPath &session_path);
-    void SessionRemoved(const QString &session_id, const QDBusObjectPath &session_path);
-    void UserNew(const uint uid, const QDBusObjectPath &path);
-    void UserRemoved(const uint uid, const QDBusObjectPath &path);
-
 
 public slots:
     QString lastError() const;
