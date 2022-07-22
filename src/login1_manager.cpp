@@ -79,6 +79,12 @@ Login1Manager::~Login1Manager() {}
 
 // properties
 
+QStringList Login1Manager::bootLoaderEntries() const
+{
+    Q_D(const Login1Manager);
+    return qvariant_cast<QStringList>(d->m_inter->property("BootLoaderEntries"));
+}
+
 QStringList Login1Manager::killExcludeUsers() const
 {
     Q_D(const Login1Manager);
@@ -291,6 +297,18 @@ quint64 Login1Manager::nCurrentSessions() const
 {
     Q_D(const Login1Manager);
     return qvariant_cast<quint64>(d->m_inter->property("NCurrentSessions"));
+}
+
+quint64 Login1Manager::rebootToBootLoaderMenu() const
+{
+    Q_D(const Login1Manager);
+    return qvariant_cast<quint64>(d->m_inter->property("RebootToBootLoaderMenu"));
+}
+
+quint64 Login1Manager::runtimeDirectoryInodesMax() const
+{
+    Q_D(const Login1Manager);
+    return qvariant_cast<quint64>(d->m_inter->property("RuntimeDirectoryInodesMax"));
 }
 
 quint64 Login1Manager::runtimeDirectorySize() const
@@ -637,6 +655,17 @@ void Login1Manager::halt(const bool interactive)
     }
 }
 
+void Login1Manager::haltWithFlags(const quint64 flags)
+{
+    Q_D(Login1Manager);
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList("HaltWithFlags", {QVariant::fromValue(flags)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
+}
+
 void Login1Manager::hibernate(const bool interactive)
 {
     Q_D(Login1Manager);
@@ -648,10 +677,32 @@ void Login1Manager::hibernate(const bool interactive)
     }
 }
 
+void Login1Manager::hibernateWithFlags(const quint64 flags)
+{
+    Q_D(Login1Manager);
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList("HibernateWithFlags", {QVariant::fromValue(flags)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
+}
+
 void Login1Manager::hybridSleep(const bool interactive)
 {
     Q_D(Login1Manager);
     QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList("HybridSleep", {QVariant::fromValue(interactive)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
+}
+
+void Login1Manager::hybridSleepWithFlags(const quint64 flags)
+{
+    Q_D(Login1Manager);
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList("HybridSleepWithFlags", {QVariant::fromValue(flags)});
     replay.waitForFinished();
     if (!replay.isValid()) {
         d->m_errorMessage = replay.error().message();
@@ -824,11 +875,33 @@ void Login1Manager::powerOff(const bool interactive)
     }
 }
 
+void Login1Manager::powerOffWithFlags(const quint64 flags)
+{
+    Q_D(Login1Manager);
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList("PowerOffWithFlags", {QVariant::fromValue(flags)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
+}
+
 void Login1Manager::reboot(const bool interactive)
 {
     Q_D(Login1Manager);
     QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("Reboot"),
         {QVariant::fromValue(interactive)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
+}
+
+void Login1Manager::rebootWithFlags(const quint64 flags)
+{
+    Q_D(Login1Manager);
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList("RebootWithFlags", {QVariant::fromValue(flags)});
     replay.waitForFinished();
     if (!replay.isValid()) {
         d->m_errorMessage = replay.error().message();
@@ -848,11 +921,47 @@ void Login1Manager::releaseSession(const QString &session_id)
     }
 }
 
-void Login1Manager::scheduleShutdown(const QString type, qint64 usec)
+void Login1Manager::setRebootParameter(const QString &paramter)
+{
+    Q_D(Login1Manager);
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("SetRebootParameter"),
+        {QVariant::fromValue(paramter)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
+}
+
+void Login1Manager::scheduleShutdown(const QString &type, qint64 usec)
 {
     Q_D(Login1Manager);
     QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("ScheduleShutdown"),
         {QVariant::fromValue(type), QVariant::fromValue(usec)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
+}
+
+void Login1Manager::setRebootToBootLoaderEntry(const QString &entry)
+{
+    Q_D(Login1Manager);
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("SetRebootToBootLoaderEntry"),
+        {QVariant::fromValue(entry)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
+}
+
+void Login1Manager::setRebootToBootLoaderMenu(const quint64 timeout)
+{
+    Q_D(Login1Manager);
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("SetRebootToBootLoaderMenu"),
+        {QVariant::fromValue(timeout)});
     replay.waitForFinished();
     if (!replay.isValid()) {
         d->m_errorMessage = replay.error().message();
@@ -920,6 +1029,28 @@ void Login1Manager::suspendThenHibernate(const bool interactive)
     }
 }
 
+void Login1Manager::suspendThenHibernateWithFlags(const quint64 flags)
+{
+    Q_D(Login1Manager);
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList("SuspendThenHibernateWithFlags", {QVariant::fromValue(flags)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
+}
+
+void Login1Manager::suspendWithFlags(const quint64 flags)
+{
+    Q_D(Login1Manager);
+    QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList("SuspendWithFlags", {QVariant::fromValue(flags)});
+    replay.waitForFinished();
+    if (!replay.isValid()) {
+        d->m_errorMessage = replay.error().message();
+        emit errorMessageChanged(d->m_errorMessage);
+    }
+}
+
 void Login1Manager::terminateSeat(const QString &seat_id)
 {
     Q_D(Login1Manager);
@@ -932,7 +1063,7 @@ void Login1Manager::terminateSeat(const QString &seat_id)
     }
 }
 
-void Login1Manager::terminateSession(const QString session_id)
+void Login1Manager::terminateSession(const QString &session_id)
 {
     Q_D(Login1Manager);
     QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("TerminateSession"),

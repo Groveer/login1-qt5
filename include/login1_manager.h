@@ -20,6 +20,7 @@ public:
     explicit Login1Manager(QObject *parent = nullptr);
     virtual ~Login1Manager();
 
+    Q_PROPERTY(QStringList BootLoaderEntries READ bootLoaderEntries)
     Q_PROPERTY(QStringList KillExcludeUsers READ killExcludeUsers)
     Q_PROPERTY(QStringList KillOnlyUsers READ killOnlyUsers)
     Q_PROPERTY(bool Docked READ docked)
@@ -54,10 +55,13 @@ public:
     Q_PROPERTY(quint64 InhibitorsMax READ inhibitorsMax);
     Q_PROPERTY(quint64 NCurrentInhibitors READ nCurrentInhibitors);
     Q_PROPERTY(quint64 NCurrentSessions READ nCurrentSessions);
+    Q_PROPERTY(quint64 RebootToBootLoaderMenu READ rebootToBootLoaderMenu);
+    Q_PROPERTY(quint64 RuntimeDirectoryInodesMax READ runtimeDirectoryInodesMax);
     Q_PROPERTY(quint64 RuntimeDirectorySize READ runtimeDirectorySize);
     Q_PROPERTY(quint64 SessionMax READ sessionMax);
     Q_PROPERTY(quint64 UserStopDelayUSec READ userStopDelayUSec);
 
+    QStringList bootLoaderEntries() const;
     QStringList killExcludeUsers() const;
     QStringList killOnlyUsers() const;
     bool docked() const;
@@ -93,6 +97,8 @@ public:
     quint64 inhibitorsMax() const;
     quint64 nCurrentInhibitors() const;
     quint64 nCurrentSessions() const;
+    quint64 rebootToBootLoaderMenu() const;
+    quint64 runtimeDirectoryInodesMax() const;
     quint64 runtimeDirectorySize() const;
     quint64 sessionMax() const;
     quint64 userStopDelayUSec() const;
@@ -144,8 +150,11 @@ public slots:
     QString getUser(const uint uid);
     QString getUserByPID(const uint pid);
     void halt(const bool interactive);
+    void haltWithFlags(const quint64 flags);
     void hibernate(const bool interactive);
+    void hibernateWithFlags(const quint64 flags);
     void hybridSleep(const bool interactive);
+    void hybridSleepWithFlags(const quint64 flags);
     int inhibit(const QString &what, const QString &who, const QString &why, const QString &mode);
     void killSession(const QString &session_id, const QString &who, const int signal_number);
     void killUser(const uint uid, const int signal_number);
@@ -156,16 +165,23 @@ public slots:
     void lockSession(const QString &session_id);
     void lockSessions();
     void powerOff(const bool interactive);
+    void powerOffWithFlags(const quint64 flags);
     void reboot(const bool interactive);
+    void rebootWithFlags(const quint64 flags);
     void releaseSession(const QString &session_id);
-    void scheduleShutdown(const QString type, qint64 usec);
+    void setRebootParameter(const QString &paramter);
+    void scheduleShutdown(const QString &type, qint64 usec);
+    void setRebootToBootLoaderEntry(const QString &entry);
+    void setRebootToBootLoaderMenu(const quint64 timeout);
     void setRebootTofirmwareSetup(const bool enbale);
     void setUserLinger(const uint uid, const bool enable, const bool interactive);
     void setWallMessage(const QString &message, const bool enable = false);
     void suspend(const bool interactive);
     void suspendThenHibernate(const bool interactive);
+    void suspendThenHibernateWithFlags(const quint64 flags);
+    void suspendWithFlags(const quint64 flags);
     void terminateSeat(const QString &seat_id);
-    void terminateSession(const QString session_id);
+    void terminateSession(const QString &session_id);
     void terminateUser(const uint uid);
     void unlockSession(const QString &session_id);
     void unlockSessions();

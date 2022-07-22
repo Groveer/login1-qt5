@@ -43,7 +43,7 @@ signals:
 
 public slots:
     QString lastError() const;
-    void activateSession(const QString & session_id);
+    void activateSession(const QString &session_id);
     void switchTo(const uint vtnr);
     void switchToNext();
     void switchToPrevious();
