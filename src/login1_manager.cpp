@@ -16,7 +16,6 @@
 #include "dbusinterface.h"
 #include "login1_manager_p.h"
 #include "login1_types_p.h"
-
 LOGIN1_BEGIN_NAMESPACE
 
 Login1Manager::Login1Manager(QObject *parent)

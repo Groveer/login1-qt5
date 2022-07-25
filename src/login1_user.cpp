@@ -2,6 +2,7 @@
 
 #include "dbusinterface.h"
 #include "login1_types.h"
+#include "login1_types_p.h"
 #include "login1_user_p.h"
 #include <qlist.h>
 #include <qobject.h>
