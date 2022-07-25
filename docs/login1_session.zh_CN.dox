@@ -15,6 +15,13 @@ Login1Session 中定义了会话管理的接口
 
 传入Login1Session 的path和parent进行构造
 
+@fn QString Login1Session::lastError() const 
+@brief 上一次的错误信息
+
+存储上一次错误信息并返回
+
+@return 上一次错误信息
+
 @fn bool Login1Session::active() const
 @brief 读取 active 属性
 
@@ -222,6 +229,11 @@ Login1Session 中定义了会话管理的接口
 @brief 和Manger对象的相应工作方式类似
 
 和Manger对象的相应工作方式类似
+
+@fn void Login1Session::errorMessageChanged(const QString &message)
+@brief 当接口连接错误后发送信号
+
+发送接口连接的错误信息
 
 @property Login1Session::Active
 @brief 是否活动状态
