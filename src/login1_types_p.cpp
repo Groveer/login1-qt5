@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+//
+// SPDX-License-Identifier: LGPL-3.0-only
+
 #include "login1_types_p.h"
 #include <qdbusmetatype.h>
 
