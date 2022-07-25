@@ -4,11 +4,11 @@
 
 /*!
 @~chinese
-@file login1_manager.h
+@file login1manager.h
 
-login1_manager.h 中定义了登录管理对象的接口。
+login1manager.h 中定义了登录管理对象的接口。
 
-@class Login1::Login1Manager login1_manager.h
+@class DLogin1::Login1Manager login1manager.h
 @brief Login1Manager 类
 
 Login1Manager 中定义了登录管理对象的接口。

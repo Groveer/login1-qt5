@@ -5,11 +5,11 @@
 /*!
 
 @~chinese
-@file login1_session.h
+@file login1session.h
 
-login1_session.h 中定义了会话管理的接口
+login1session.h 中定义了会话管理的接口
 
-@class Login1::Login1Session login1_session.h
+@class DLogin1::Login1Session login1session.h
 @brief Login1Session 类
 
 Login1Session 中定义了会话管理的接口
