@@ -10,7 +10,7 @@ Login1-qt5是对systemd-logind的DBus接口进行封装。用于观察和管理�
 
 ### Login1Seat
 
-席位对象，对 org.freedesktop.login1.Seat 接口的封装。
+Seat对象，对 org.freedesktop.login1.Seat 接口的封装。
 
 ### Login1Session
 
