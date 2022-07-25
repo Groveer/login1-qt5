@@ -1,0 +1,54 @@
+/*!
+@~chinese
+@file login1_types.h
+login1_types.h 中定义了login1组件需要使用到的一些自定义数据结构。
+
+@struct Login1Types::ScheduledShutdownValue
+@brief 定义定时关机所用数据结构
+@param type: 电源管理类型：关机操作类型，可以是"poweroff"、"dry-poweroff"、"reboot"、"dry-reboot"、"halt "和 "dry-halt "之一
+@param usec: Unix时间戳，从1970年1月1日零点到现在的微秒数
+
+@struct Login1Types::SessionProperty
+@brief 定义Session所用的数据结构
+@param name: Session名
+@param var
+
+@struct Login1Types::Inhibitor
+@brief 一个结构数组
+@param what: 电源模式（关机，待机，休眠等）
+@param who: 发出抑制器的对象
+@param why: 为何发出抑制器
+@param mode: 抑制器模式
+@param uid: 用户id
+@param pid: 进程id
+
+@struct Login1Types::Seat
+@param seat_id: seat编号,例如:“seat0”
+@param path: seat路径
+
+@struct Login1Types::Session
+@param session_id: 会话编号
+@param user_id: 用户编号
+@param username: 用户名
+@param seat_id: seat编号,例如:“seat0”
+@param path: 路径
+
+@struct Login1Types::User
+@param user_id: 用户编号
+@param username: 用户名
+@param path: 路径
+
+@struct Login1Types::SeatPath
+\sa Login1Types::Seat
+
+@struct Login1Types::SessionPath
+@param session_id: 会话编号
+@param path: 路径
+
+@struct Login1Types::UserPath
+@param user_id: 用户编号
+@param path: 路径
+
+
+
+*/
