@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: LGPL-3.0-only
 
-#include "login1_manager.h"
+#include "login1manager.h"
 #include <qdbuspendingreply.h>
 #include <qdbusextratypes.h>
 #include <qdbusunixfiledescriptor.h>
@@ -18,8 +18,8 @@
 #include <tuple>
 
 #include "dbusinterface.h"
-#include "login1_manager_p.h"
-#include "login1_types_p.h"
+#include "login1manager_p.h"
+#include "login1types_p.h"
 LOGIN1_BEGIN_NAMESPACE
 
 Login1Manager::Login1Manager(QObject *parent)

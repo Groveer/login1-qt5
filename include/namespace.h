@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: LGPL-3.0-only
 
-#define LOGIN1_NAMESPACE Login1
+#define LOGIN1_NAMESPACE DLogin1
 
 #define LOGIN1_USE_NAMESPACE using namespace LOGIN1_NAMESPACE;
 

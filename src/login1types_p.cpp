@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: LGPL-3.0-only
 
-#include "login1_types_p.h"
+#include "login1types_p.h"
 #include <qdbusmetatype.h>
 
 LOGIN1_BEGIN_NAMESPACE

@@ -6,7 +6,7 @@
 
 #include <qobject.h>
 
-#include "login1_types.h"
+#include "login1types.h"
 #include "namespace.h"
 
 LOGIN1_BEGIN_NAMESPACE

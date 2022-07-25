@@ -2,11 +2,11 @@
 //
 // SPDX-License-Identifier: LGPL-3.0-only
 
-#include "login1_session.h"
+#include "login1session.h"
 
 #include "dbusinterface.h"
-#include "login1_session_p.h"
-#include "src/login1_types_p.h"
+#include "login1session_p.h"
+#include "src/login1types_p.h"
 #include <QDBusError>
 #include <qdbuspendingreply.h>
 #include <qdbusunixfiledescriptor.h>

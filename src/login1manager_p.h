@@ -5,7 +5,7 @@
 #pragma once
 
 #include "include/namespace.h"
-#include "login1_manager.h"
+#include "login1manager.h"
 #include <qobject.h>
 
 class DBusInterface;
