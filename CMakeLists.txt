@@ -60,9 +60,9 @@ if (BUILD_DOCS AND DOXYGEN_FOUND)
     set (DOXYGEN_MACRO_EXPANSION "YES")
     set (DOXYGEN_EXPAND_ONLY_PREDEF "YES")
     set (DOXYGEN_PREDEFINED
-        "\"LOGIN1_BEGIN_NAMESPACE=namespace Login1 {\""
+        "\"LOGIN1_BEGIN_NAMESPACE=namespace DLogin1 {\""
         "\"LOGIN1_END_NAMESPACE=}\""
-        "\"LOGIN1_USE_NAMESPACE=using namespace Login1;\""
+        "\"LOGIN1_USE_NAMESPACE=using namespace DLogin1;\""
     )
 
     doxygen_add_docs (doxygen

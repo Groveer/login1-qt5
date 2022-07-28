@@ -4,16 +4,16 @@
 
 /*!
 @~chinese
-@file login1_seat.h
+@file login1seat.h
 
-login1_seat.h 中定义了管理用户seat的接口。
+login1seat.h 中定义了管理用户seat的接口。
 
-@class Login1::Login1Seat login1_seat.h
+@class DLogin1::Login1Seat login1seat.h
 @brief Login1Seat
     Login1Manager 中定义了管理用户seat的接口。
 @note seat一般情况下只有seat0，seat由分配给特定工作场所的所有硬件设备组成。
     它由至少一个图形设备组成，通常还包括键盘、鼠标。它还可以包括摄像机、声卡等。
-    seat由seat名称标识，这些字符串是字符串（<= 255 个字符），以四个字符 "seat" 开头，
+    seat由seat名称标识，这些字符串是字符串(<= 255 个字符），以四个字符 "seat" 开头，
     后跟至少一个 [a-zA-Z0-9]、" _" 和 " -" 范围内的字符。它们适合用作文件名。seat名称可能稳定，
     也可能不稳定，如果座位再次可用，则可能会复用。经过测试，在同一台主机上使用vnc启动两个用户桌面，也只有一个seat0
 

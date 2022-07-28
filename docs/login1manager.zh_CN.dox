@@ -4,20 +4,23 @@
 
 /*!
 @~chinese
-@file login1_manager.h
+@file login1manager.h
 
-login1_manager.h 中定义了登录管理对象的接口。
+login1manager.h 中定义了登录管理对象的接口。
 
-@class Login1::Login1Manager login1_manager.h
+@class DLogin1::Login1Manager login1manager.h
 @brief Login1Manager 类
 
 Login1Manager 中定义了登录管理对象的接口。
 
+@fn QStringList Login1Manager::bootLoaderEntries() const
+@brief 属性包含引导加载程序条目的列表。这包括配置中定义的引导加载程序条目以及引导加载程序报告的任何其他加载程序条目
+\sa [systemd-boot](https://www.freedesktop.org/software/systemd/man/systemd-boot.html#)
+@return 引导加载程序条目的列表
+
 @fn QStringList Login1Manager::killExcludeUsers() const
 @brief 读取 KillExcludeUsers 属性。
-
 该属性将获取采用空格分割的用户列表，在设置了 KillUserProcesses=yes 将会排除该用户会话范围内的进程。如果未设置 KillExcludeUsers=，则默认排除“root”用户。
-
 @return 以空格分割的用户列表.
 
 @fn QStringList Login1Manager::killOnlyUsers() const
@@ -112,6 +115,16 @@ Login1Manager 中定义了登录管理对象的接口。
 @brief 读取系统空闲时采取的行动 （默认是忽略）
 @return 默认："ignore"，可以是关机或者睡眠等其他电源管理状态。
 
+@fn QString Login1Manager::rebootParameter() const
+@brief RebootParameter属性显示使用上述SetRebootParameter()方法设置的值
+\sa Login1Manager::setRebootParameter(const QString &paramter)
+@return SetRebootParameter()方法设置的值
+
+@fn QString Login1Manager::rebootToBootLoaderEntry() const
+@brief 显示配置重启后从引导加载程序执行的操作
+\sa Login1Manager::setRebootToBootLoaderEntry(const QString &entry)
+@return setRebootToBootLoaderEntry()方法设置的值
+
 @fn QString Login1Manager::wallMessage() const
 @brief 读取系统关机时是否展示瀑布流信息 可以使用setWallMessage方法进行写入，默认为空
 @return 默认为空 
@@ -155,6 +168,15 @@ Login1Manager 中定义了登录管理对象的接口。
 
 @fn quint64 Login1Manager::nCurrentSessions() const
 @brief 读取当前注册的会话数量
+@return 数字
+
+@fn quint64 Login1Manager::rebootToBootLoaderMenu() const
+@brief 当用SetRebootToBootLoaderMenu选择了正确的重启后操作时，RebootToBootLoaderMenu真。
+@return 数字
+
+@fn quint64 Login1Manager::runtimeDirectoryInodesMax() const
+@brief 设置每个登录用户的$XDG_RUNTIME_DIR运行时目录的大小限制。
+@note 这个大小只是一个安全限制。由于每个运行时目录是一个tmpfs文件系统，它只消耗所需的内存
 @return 数字
 
 @fn quint64 Login1Manager::runtimeDirectorySize() const

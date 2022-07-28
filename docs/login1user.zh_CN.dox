@@ -5,11 +5,11 @@
 /*!
 
 @~chinese
-@file login1_user.h
+@file login1user.h
 
-login1_user.h 中定义了会话管理的接口
+login1user.h 中定义了会话管理的接口
 
-@class login1::Login1User login1_user.h 
+@class DLogin1::Login1User login1user.h 
 @brief Login1User 类
 
 Login1User类中定义了用户管理的接口
