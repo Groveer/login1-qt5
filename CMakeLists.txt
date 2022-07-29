@@ -9,9 +9,9 @@ if (NOT DEFINED VERSION)
     set(VERSION "1.0.0")
 endif()
 
-project(login1-qt5
+project(dtklogin1
     LANGUAGES CXX
-    HOMEPAGE_URL https://github.com/Groveer/login1-qt5
+    HOMEPAGE_URL https://github.com/Groveer/dtklogin1
     DESCRIPTION "login1 DBus interfaces binding for Qt5."
     VERSION ${VERSION})
 
@@ -42,7 +42,7 @@ find_package(Doxygen)
 set (BUILD_DOCS ON)
 
 if (BUILD_DOCS AND DOXYGEN_FOUND)
-    set (QCH_INSTALL_DESTINATION ${CMAKE_INSTALLL_PREFIX}/share/dde/doc CACHE STRING "QCH install location")
+    set (QCH_INSTALL_DESTINATION ${CMAKE_INSTALL_PREFIX}/share/dtk/doc CACHE STRING "QCH install location")
     set (DOXYGEN_GENERATE_HTML "YES" CACHE STRING "Doxygen HTML output")
     set (DOXYGEN_GENERATE_XML "NO" CACHE STRING "Doxygen XML output")
     set (DOXYGEN_GENERATE_QHP "YES" CACHE STRING "Doxygen QHP output")
@@ -82,7 +82,7 @@ file(GLOB_RECURSE SRCS
     "src/*.cpp"
 )
 
-set(BIN_NAME dtklogin1-qt5)
+set(BIN_NAME dtklogin1)
 
 set(PC_LIBS_PRIVATE Qt5Core)
 set(PC_REQ_PRIVATE)

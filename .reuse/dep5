@@ -1,7 +1,7 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: login1-qt5
+Upstream-Name: dtklogin1
 Upstream-Contact: guoyao <guoyao@uniontech.com>
-Source: https://github.com/Groveer/login1-qt5
+Source: https://github.com/Groveer/dtklogin1
 
 # Config files
 Files: .clang-format .gitignore misc/*.in
