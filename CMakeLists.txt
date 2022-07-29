@@ -60,9 +60,9 @@ if (BUILD_DOCS AND DOXYGEN_FOUND)
     set (DOXYGEN_MACRO_EXPANSION "YES")
     set (DOXYGEN_EXPAND_ONLY_PREDEF "YES")
     set (DOXYGEN_PREDEFINED
-        "\"LOGIN1_BEGIN_NAMESPACE=namespace DLogin1 {\""
-        "\"LOGIN1_END_NAMESPACE=}\""
-        "\"LOGIN1_USE_NAMESPACE=using namespace DLogin1;\""
+        "\"DLOGIN1_BEGIN_NAMESPACE=namespace Dtk::Login1 {\""
+        "\"DLOGIN1_END_NAMESPACE=}\""
+        "\"DLOGIN1_USE_NAMESPACE=using namespace Dtk::Login1;\""
     )
 
     doxygen_add_docs (doxygen
@@ -82,7 +82,7 @@ file(GLOB_RECURSE SRCS
     "src/*.cpp"
 )
 
-set(BIN_NAME login1-qt5)
+set(BIN_NAME dtklogin1-qt5)
 
 set(PC_LIBS_PRIVATE Qt5Core)
 set(PC_REQ_PRIVATE)

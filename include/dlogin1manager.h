@@ -10,18 +10,18 @@
 #include <tuple>
 
 #include "namespace.h"
-#include "login1types.h"
+#include "dlogin1types.h"
 
-LOGIN1_BEGIN_NAMESPACE
+DLOGIN1_BEGIN_NAMESPACE
 
-class Login1ManagerPrivate;
+class DLogin1ManagerPrivate;
 
-class Login1Manager : public QObject
+class DLogin1Manager : public QObject
 {
     Q_OBJECT
 public:
-    explicit Login1Manager(QObject *parent = nullptr);
-    virtual ~Login1Manager();
+    explicit DLogin1Manager(QObject *parent = nullptr);
+    virtual ~DLogin1Manager();
 
     Q_PROPERTY(QStringList BootLoaderEntries READ bootLoaderEntries)
     Q_PROPERTY(QStringList KillExcludeUsers READ killExcludeUsers)
@@ -190,7 +190,7 @@ public slots:
     void unlockSessions();
 
 private:
-    QScopedPointer<Login1ManagerPrivate> d_ptr;
-    Q_DECLARE_PRIVATE(Login1Manager)
+    QScopedPointer<DLogin1ManagerPrivate> d_ptr;
+    Q_DECLARE_PRIVATE(DLogin1Manager)
 };
-LOGIN1_END_NAMESPACE
+DLOGIN1_END_NAMESPACE

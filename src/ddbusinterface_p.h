@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: LGPL-3.0-only
 
 #pragma once
-#include "dbusinterface.h"
+#include "ddbusinterface.h"
 
 class QDBusPendingCallWatcher;
 

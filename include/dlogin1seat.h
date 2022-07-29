@@ -7,19 +7,19 @@
 #include <qobject.h>
 
 #include "namespace.h"
-#include "login1types.h"
-#include "src/login1types_p.h"
+#include "dlogin1types.h"
+#include "src/dlogin1types_p.h"
 
-LOGIN1_BEGIN_NAMESPACE
+DLOGIN1_BEGIN_NAMESPACE
 
-class Login1SeatPrivate;
+class DLogin1SeatPrivate;
 
-class Login1Seat : public QObject
+class DLogin1Seat : public QObject
 {
     Q_OBJECT
 public:
-    explicit Login1Seat(const QString &path, QObject *parent = nullptr);
-    virtual ~Login1Seat();
+    explicit DLogin1Seat(const QString &path, QObject *parent = nullptr);
+    virtual ~DLogin1Seat();
 
     Q_PROPERTY(QList<SessionPath> Sessions READ sessions)
     Q_PROPERTY(bool CanGraphical READ canGraphical)
@@ -54,7 +54,7 @@ public slots:
     void terminate();
 
 private:
-    QScopedPointer<Login1SeatPrivate> d_ptr;
-    Q_DECLARE_PRIVATE(Login1Seat)
+    QScopedPointer<DLogin1SeatPrivate> d_ptr;
+    Q_DECLARE_PRIVATE(DLogin1Seat)
 };
-LOGIN1_END_NAMESPACE
+DLOGIN1_END_NAMESPACE

@@ -2,8 +2,8 @@
 //
 // SPDX-License-Identifier: LGPL-3.0-only
 
-#include "dbusinterface.h"
-#include "dbusinterface_p.h"
+#include "ddbusinterface.h"
+#include "ddbusinterface_p.h"
 
 #include <QMetaObject>
 #include <qmetaobject.h>

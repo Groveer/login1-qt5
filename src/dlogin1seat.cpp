@@ -2,32 +2,32 @@
 //
 // SPDX-License-Identifier: LGPL-3.0-only
 
-#include "login1seat.h"
+#include "dlogin1seat.h"
 
-#include "dbusinterface.h"
-#include "login1seat_p.h"
-#include "login1types.h"
-#include "src/login1types_p.h"
+#include "ddbusinterface.h"
+#include "dlogin1seat_p.h"
+#include "dlogin1types.h"
+#include "src/dlogin1types_p.h"
 #include <qlist.h>
 #include <qobject.h>
 #include <qdbuspendingreply.h>
 
-LOGIN1_BEGIN_NAMESPACE
-Login1Seat::Login1Seat(const QString &path, QObject *parent)
+DLOGIN1_BEGIN_NAMESPACE
+DLogin1Seat::DLogin1Seat(const QString &path, QObject *parent)
     : QObject(parent)
-    , d_ptr(new Login1SeatPrivate(this))
+    , d_ptr(new DLogin1SeatPrivate(this))
 {
     const QString &Service = QStringLiteral("org.freedesktop.login1");
     const QString &Interface = QStringLiteral("org.freedesktop.login1.Seat");
 
     SessionPath_p::registerMetaType();
-    Q_D(Login1Seat);
+    Q_D(DLogin1Seat);
     d->m_inter = new DBusInterface(Service, path, Interface, QDBusConnection::systemBus(), this);
 }
 
-QList<SessionPath> Login1Seat::sessions() const
+QList<SessionPath> DLogin1Seat::sessions() const
 {
-    Q_D(const Login1Seat);
+    Q_D(const DLogin1Seat);
     const auto &result = qvariant_cast<QList<SessionPath_p>>(d->m_inter->property("Sessions"));
     QList<SessionPath> sessionPaths;
     for (auto sessionPath_p : result) {
@@ -39,39 +39,39 @@ QList<SessionPath> Login1Seat::sessions() const
     return sessionPaths;
 }
 
-bool Login1Seat::canGraphical() const
+bool DLogin1Seat::canGraphical() const
 {
-    Q_D(const Login1Seat);
+    Q_D(const DLogin1Seat);
     return qvariant_cast<bool>(d->m_inter->property("CanGraphical"));
 }
 
-bool Login1Seat::canTTY() const
+bool DLogin1Seat::canTTY() const
 {
-    Q_D(const Login1Seat);
+    Q_D(const DLogin1Seat);
     return qvariant_cast<bool>(d->m_inter->property("CanTTY"));
 }
 
-bool Login1Seat::idleHint() const
+bool DLogin1Seat::idleHint() const
 {
-    Q_D(const Login1Seat);
+    Q_D(const DLogin1Seat);
     return qvariant_cast<bool>(d->m_inter->property("IdleHint"));
 }
 
-QString Login1Seat::id() const
+QString DLogin1Seat::id() const
 {
-    Q_D(const Login1Seat);
+    Q_D(const DLogin1Seat);
     return qvariant_cast<QString>(d->m_inter->property("Id"));
 }
 
-QString Login1Seat::lastError() const
+QString DLogin1Seat::lastError() const
 {
-    Q_D(const Login1Seat);
+    Q_D(const DLogin1Seat);
     return d->m_errorMessage;
 }
 
-SessionPath Login1Seat::activeSession() const
+SessionPath DLogin1Seat::activeSession() const
 {
-    Q_D(const Login1Seat);
+    Q_D(const DLogin1Seat);
     const auto & result = qvariant_cast<SessionPath_p>(d->m_inter->property("ActiveSession"));
     SessionPath path;
     path.path = result.path.path();
@@ -79,21 +79,21 @@ SessionPath Login1Seat::activeSession() const
     return path;
 }
 
-quint64 Login1Seat::idleSinceHint() const
+quint64 DLogin1Seat::idleSinceHint() const
 {
-    Q_D(const Login1Seat);
+    Q_D(const DLogin1Seat);
     return qvariant_cast<quint64>(d->m_inter->property("IdleSinceHint"));
 }
 
-quint64 Login1Seat::idleSinceHintMonotonic() const
+quint64 DLogin1Seat::idleSinceHintMonotonic() const
 {
-    Q_D(const Login1Seat);
+    Q_D(const DLogin1Seat);
     return qvariant_cast<quint64>(d->m_inter->property("IdleSinceHintMonotonic"));
 }
 
-void Login1Seat::activateSession(const QString &session_id)
+void DLogin1Seat::activateSession(const QString &session_id)
 {
-    Q_D(Login1Seat);
+    Q_D(DLogin1Seat);
     QVariantList args {QVariant::fromValue(session_id)};
     QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList("ActivateSession", args);
     replay.waitForFinished();
@@ -103,9 +103,9 @@ void Login1Seat::activateSession(const QString &session_id)
     }
 }
 
-void Login1Seat::switchTo(const uint vtnr)
+void DLogin1Seat::switchTo(const uint vtnr)
 {
-    Q_D(Login1Seat);
+    Q_D(DLogin1Seat);
     QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList(QStringLiteral("SwitchTo"),
         {QVariant::fromValue(vtnr)});
     replay.waitForFinished();
@@ -115,9 +115,9 @@ void Login1Seat::switchTo(const uint vtnr)
     }
 }
 
-void Login1Seat::switchToNext()
+void DLogin1Seat::switchToNext()
 {
-    Q_D(Login1Seat);
+    Q_D(DLogin1Seat);
     QDBusPendingReply<> replay = d->m_inter->asyncCall(QStringLiteral("SwitchToNext"));
     replay.waitForFinished();
     if (!replay.isValid()) {
@@ -126,9 +126,9 @@ void Login1Seat::switchToNext()
     }
 }
 
-void Login1Seat::switchToPrevious()
+void DLogin1Seat::switchToPrevious()
 {
-    Q_D(Login1Seat);
+    Q_D(DLogin1Seat);
     QDBusPendingReply<> replay = d->m_inter->asyncCall(QStringLiteral("SwitchToPrevious"));
     replay.waitForFinished();
     if (!replay.isValid()) {
@@ -137,9 +137,9 @@ void Login1Seat::switchToPrevious()
     }
 }
 
-void Login1Seat::terminate()
+void DLogin1Seat::terminate()
 {
-    Q_D(Login1Seat);
+    Q_D(DLogin1Seat);
     QDBusPendingReply<> replay = d->m_inter->asyncCall(QStringLiteral("Terminate"));
     replay.waitForFinished();
     if (!replay.isValid()) {
@@ -148,5 +148,5 @@ void Login1Seat::terminate()
     }
 }
 
-Login1Seat::~Login1Seat() {}
-LOGIN1_END_NAMESPACE
+DLogin1Seat::~DLogin1Seat() {}
+DLOGIN1_END_NAMESPACE
