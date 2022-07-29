@@ -1,2 +1,2 @@
-# login1-qt5
+# dtklogin1
 login1 DBus interfaces binding for Qt5
