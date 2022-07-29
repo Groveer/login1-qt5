@@ -5,17 +5,17 @@
 #pragma once
 
 #include "include/namespace.h"
-#include "login1manager.h"
+#include "dlogin1manager.h"
 #include <qobject.h>
 
 class DBusInterface;
-LOGIN1_BEGIN_NAMESPACE
+DLOGIN1_BEGIN_NAMESPACE
 
-class Login1ManagerPrivate : public QObject
+class DLogin1ManagerPrivate : public QObject
 {
     Q_OBJECT
 public:
-    explicit Login1ManagerPrivate(Login1Manager *parent = nullptr) : QObject(parent), q_ptr(parent) {}
+    explicit DLogin1ManagerPrivate(DLogin1Manager *parent = nullptr) : QObject(parent), q_ptr(parent) {}
 
 signals:
     // private signals
@@ -31,8 +31,8 @@ signals:
 public:
     QString m_errorMessage;
     DBusInterface *m_inter;
-    Login1Manager *q_ptr;
-    Q_DECLARE_PUBLIC(Login1Manager)
+    DLogin1Manager *q_ptr;
+    Q_DECLARE_PUBLIC(DLogin1Manager)
 };
 
-LOGIN1_END_NAMESPACE
+DLOGIN1_END_NAMESPACE

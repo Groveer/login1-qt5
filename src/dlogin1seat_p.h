@@ -8,19 +8,19 @@
 #include <qobject.h>
 
 class DBusInterface;
-LOGIN1_BEGIN_NAMESPACE
-class Login1Seat;
+DLOGIN1_BEGIN_NAMESPACE
+class DLogin1Seat;
 
-class Login1SeatPrivate : public QObject
+class DLogin1SeatPrivate : public QObject
 {
     Q_OBJECT
 public:
-    explicit Login1SeatPrivate(Login1Seat *parent = nullptr) : q_ptr(parent) {}
+    explicit DLogin1SeatPrivate(DLogin1Seat *parent = nullptr) : q_ptr(parent) {}
 
     QString m_errorMessage;
     DBusInterface *m_inter;
-    Login1Seat *q_ptr;
-    Q_DECLARE_PUBLIC(Login1Seat)
+    DLogin1Seat *q_ptr;
+    Q_DECLARE_PUBLIC(DLogin1Seat)
 };
 
-LOGIN1_END_NAMESPACE
+DLOGIN1_END_NAMESPACE

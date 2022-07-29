@@ -4,19 +4,19 @@
 
 Login1-qt5是对systemd-logind的DBus接口进行封装。用于观察和管理用户 login 以及 seat 的状态。
 
-### Login1Manager
+### DLogin1Manager
 
 管理器对象，对 org.freedesktop.login1.Manager 接口的封装。
 
-### Login1Seat
+### DLogin1Seat
 
 Seat对象，对 org.freedesktop.login1.Seat 接口的封装。
 
-### Login1Session
+### DLogin1Session
 
 会话对象，对 org.freedesktop.login1.Session 接口的封装。
 
-### Login1User
+### DLogin1User
 
 用户对象，对 org.freedesktop.login1.User 接口的封装。
 

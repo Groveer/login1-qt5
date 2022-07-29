@@ -7,18 +7,18 @@
 #include <qobject.h>
 
 #include "namespace.h"
-#include "login1types.h"
+#include "dlogin1types.h"
 
-LOGIN1_BEGIN_NAMESPACE
+DLOGIN1_BEGIN_NAMESPACE
 
-class Login1UserPrivate;
+class DLogin1UserPrivate;
 
-class Login1User : public QObject
+class DLogin1User : public QObject
 {
     Q_OBJECT
 public:
-    explicit Login1User(const QString &path, QObject *parent = nullptr);
-    virtual ~Login1User();
+    explicit DLogin1User(const QString &path, QObject *parent = nullptr);
+    virtual ~DLogin1User();
 
     Q_PROPERTY(QList<SessionPath> Sessions READ sessions)
     Q_PROPERTY(bool IdleHint READ idleHint)
@@ -61,7 +61,7 @@ public slots:
     void terminate();
 
 private:
-    QScopedPointer<Login1UserPrivate> d_ptr;
-    Q_DECLARE_PRIVATE(Login1User)
+    QScopedPointer<DLogin1UserPrivate> d_ptr;
+    Q_DECLARE_PRIVATE(DLogin1User)
 };
-LOGIN1_END_NAMESPACE
+DLOGIN1_END_NAMESPACE

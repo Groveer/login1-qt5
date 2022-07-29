@@ -2,35 +2,35 @@
 //
 // SPDX-License-Identifier: LGPL-3.0-only
 
-#include "login1user.h"
+#include "dlogin1user.h"
 
-#include "dbusinterface.h"
-#include "login1types.h"
-#include "login1types_p.h"
-#include "login1user_p.h"
+#include "ddbusinterface.h"
+#include "dlogin1types.h"
+#include "dlogin1types_p.h"
+#include "dlogin1user_p.h"
 #include <qlist.h>
 #include <qobject.h>
 #include <qdbuspendingreply.h>
 
-LOGIN1_BEGIN_NAMESPACE
-Login1User::Login1User(const QString &path, QObject *parent)
+DLOGIN1_BEGIN_NAMESPACE
+DLogin1User::DLogin1User(const QString &path, QObject *parent)
     : QObject(parent)
-    , d_ptr(new Login1UserPrivate(this))
+    , d_ptr(new DLogin1UserPrivate(this))
 {
     const QString &Service = QStringLiteral("org.freedesktop.login1");
     const QString &Interface = QStringLiteral("org.freedesktop.login1.Seat");
 
     SessionPath_p::registerMetaType();
 
-    Q_D(Login1User);
+    Q_D(DLogin1User);
     d->m_inter = new DBusInterface(Service, path, Interface, QDBusConnection::systemBus(), this);
 }
 
-Login1User::~Login1User() {}
+DLogin1User::~DLogin1User() {}
 
-QList<SessionPath> Login1User::sessions() const
+QList<SessionPath> DLogin1User::sessions() const
 {
-    Q_D(const Login1User);
+    Q_D(const DLogin1User);
     const auto &result = qvariant_cast<QList<SessionPath_p>>(d->m_inter->property("Sessions"));
     QList<SessionPath> sessions;
     for (auto && session_p : result) {
@@ -42,51 +42,51 @@ QList<SessionPath> Login1User::sessions() const
     return sessions;
 }
 
-bool Login1User::idleHint() const
+bool DLogin1User::idleHint() const
 {
-    Q_D(const Login1User);
+    Q_D(const DLogin1User);
     return qvariant_cast<bool>(d->m_inter->property("IdleHint"));
 }
 
-bool Login1User::linger() const
+bool DLogin1User::linger() const
 {
-    Q_D(const Login1User);
+    Q_D(const DLogin1User);
     return qvariant_cast<bool>(d->m_inter->property("Linger"));
 }
 
-QString Login1User::name() const
+QString DLogin1User::name() const
 {
-    Q_D(const Login1User);
+    Q_D(const DLogin1User);
     return qvariant_cast<QString>(d->m_inter->property("Name"));
 }
 
-QString Login1User::runtimePath() const
+QString DLogin1User::runtimePath() const
 {
-    Q_D(const Login1User);
+    Q_D(const DLogin1User);
     return qvariant_cast<QString>(d->m_inter->property("RuntimePath"));
 }
 
-QString Login1User::service() const
+QString DLogin1User::service() const
 {
-    Q_D(const Login1User);
+    Q_D(const DLogin1User);
     return qvariant_cast<QString>(d->m_inter->property("Service"));
 }
 
-QString Login1User::slice() const
+QString DLogin1User::slice() const
 {
-    Q_D(const Login1User);
+    Q_D(const DLogin1User);
     return qvariant_cast<QString>(d->m_inter->property("Slice"));
 }
 
-QString Login1User::state() const
+QString DLogin1User::state() const
 {
-    Q_D(const Login1User);
+    Q_D(const DLogin1User);
     return qvariant_cast<QString>(d->m_inter->property("State"));
 }
 
-SessionPath Login1User::display() const
+SessionPath DLogin1User::display() const
 {
-    Q_D(const Login1User);
+    Q_D(const DLogin1User);
     const auto &result = qvariant_cast<SessionPath_p>(d->m_inter->property("Display"));
     SessionPath session;
     session.path = result.path.path();
@@ -94,53 +94,53 @@ SessionPath Login1User::display() const
     return session;
 }
 
-uint Login1User::GID() const
+uint DLogin1User::GID() const
 {
-    Q_D(const Login1User);
+    Q_D(const DLogin1User);
     return qvariant_cast<uint>(d->m_inter->property("GID"));
 }
 
-uint Login1User::UID() const
+uint DLogin1User::UID() const
 {
-    Q_D(const Login1User);
+    Q_D(const DLogin1User);
     return qvariant_cast<uint>(d->m_inter->property("UID"));
 }
 
-quint64 Login1User::idleSinceHint() const
+quint64 DLogin1User::idleSinceHint() const
 {
-    Q_D(const Login1User);
+    Q_D(const DLogin1User);
     return qvariant_cast<quint64>(d->m_inter->property("IdleSinceHint"));
 }
 
-quint64 Login1User::idleSinceHintMonotonic() const
+quint64 DLogin1User::idleSinceHintMonotonic() const
 {
-    Q_D(const Login1User);
+    Q_D(const DLogin1User);
     return qvariant_cast<quint64>(d->m_inter->property("IdleSinceHintMonotonic"));
 }
 
-quint64 Login1User::timestamp() const
+quint64 DLogin1User::timestamp() const
 {
-    Q_D(const Login1User);
+    Q_D(const DLogin1User);
     return qvariant_cast<quint64>(d->m_inter->property("Timestamp"));
 }
 
-quint64 Login1User::timestampMonotonic() const
+quint64 DLogin1User::timestampMonotonic() const
 {
-    Q_D(const Login1User);
+    Q_D(const DLogin1User);
     return qvariant_cast<quint64>(d->m_inter->property("TimestampMonotonic"));
 }
 
 // public slots
 
-QString Login1User::lastError() const
+QString DLogin1User::lastError() const
 {
-    Q_D(const Login1User);
+    Q_D(const DLogin1User);
     return d->m_errorMessage;
 }
 
-void Login1User::kill(const int signal_number)
+void DLogin1User::kill(const int signal_number)
 {
-    Q_D(Login1User);
+    Q_D(DLogin1User);
     QVariantList args {QVariant::fromValue(signal_number)};
     QDBusPendingReply<> replay = d->m_inter->asyncCallWithArgumentList("Kill", args);
     replay.waitForFinished();
@@ -150,9 +150,9 @@ void Login1User::kill(const int signal_number)
     }
 }
 
-void Login1User::terminate()
+void DLogin1User::terminate()
 {
-    Q_D(Login1User);
+    Q_D(DLogin1User);
     QDBusPendingReply<> replay = d->m_inter->asyncCall("Terminate");
     replay.waitForFinished();
     if (!replay.isValid()) {
@@ -161,4 +161,4 @@ void Login1User::terminate()
     }
 }
 
-LOGIN1_END_NAMESPACE
+DLOGIN1_END_NAMESPACE
