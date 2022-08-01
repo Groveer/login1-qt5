@@ -91,13 +91,13 @@ QStringList DLogin1Manager::bootLoaderEntries() const
 QStringList DLogin1Manager::killExcludeUsers() const
 {
     Q_D(const DLogin1Manager);
-    return qvariant_cast<QStringList>(d->m_inter->property("killExcludeUsers"));
+    return qvariant_cast<QStringList>(d->m_inter->property("KillExcludeUsers"));
 }
 
 QStringList DLogin1Manager::killOnlyUsers() const
 {
     Q_D(const DLogin1Manager);
-    return qvariant_cast<QStringList>(d->m_inter->property("killOnlyUsers"));
+    return qvariant_cast<QStringList>(d->m_inter->property("KillOnlyUsers"));
 }
 
 bool DLogin1Manager::docked() const
