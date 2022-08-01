@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: login1-qt5
-Source: https://github.com/Groveer/login1-qt5
+Upstream-Name: dtklogin1
+Source: https://github.com/Groveer/dtklogin1
 
 Files: *
 Copyright: 2022 Deepin Technology Co., Ltd.

@@ -1,3 +1,0 @@
-set(Login1-qt5_INCLUDE_DIR @CMAKE_INSTALL_INCLUDEDIR@/@BIN_NAME@)
-set(Login1-qt5_LIBRARIES @BIN_NAME@)
-include_directories("${Login1-qt5_INCLUDE_DIR}")

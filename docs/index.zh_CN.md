@@ -1,8 +1,8 @@
 @~chinese
 
-## Login1-qt5
+## dtklogin1
 
-Login1-qt5是对systemd-logind的DBus接口进行封装。用于观察和管理用户 login 以及 seat 的状态。
+dtklogin1是对systemd-logind的DBus接口进行封装。用于观察和管理用户 login 以及 seat 的状态。
 
 ### DLogin1Manager
 
